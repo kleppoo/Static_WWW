@@ -1,0 +1,118 @@
+{
+  "tenant": {
+    "name": "ACME Batteries"
+  },
+  "page": {
+    "code": "b/abc123",
+    "permalink": "https://twojadomena.pl/b/abc123/",
+    "publishedAt": "2026-01-10",
+    "version": 1
+  },
+  "battery": {
+    "model": "ACME-TRIM-01",
+    "brand": "CATL",
+    "variant": "NIO",
+    "categoryLabel": "BATTERY INFORMATION",
+    "idValue": "BATCH-2026-01 / SN-000123",
+    "chemistry": "Li-ion",
+    "capacity": "2000 mAh",
+    "mass": "86 g",
+    "manufactureLocation": "CN, Shenzhen",
+    "manufactureDate": "2025-11",
+    "hazardousSubstances": [
+      "Electrolyte (organic solvents)"
+    ],
+    "criticalRawMaterials": [
+      "Cobalt"
+    ],
+    "extinguishingAgent": {
+      "pl": "Proszek ABC / CO₂ (zgodnie z SDS)",
+      "en": "ABC dry powder / CO₂ (per SDS)"
+    }
+  },
+  "manufacturer": {
+    "name": "ACME Manufacturing Ltd.",
+    "address": "Some Street 1, 00-000 City, Country",
+    "email": "support@example.com",
+    "website": "example.com"
+  },
+  "battery.left": [
+    {
+      "label": "BILL OF MATERIALS",
+      "value": "5 raw materials"
+    },
+    {
+      "label": "RECYCLED MATERIALS",
+      "value": "0.00%"
+    },
+    {
+      "label": "PRIMARY MATERIAL",
+      "value": "Lithium"
+    }
+  ],
+  "battery.middle": [
+    {
+      "label": "MATERIALS TRACEABILITY",
+      "value": "45.05%"
+    },
+    {
+      "label": "TRACEABILITY (IN PILOT)",
+      "value": "45.05%"
+    },
+    {
+      "label": "PHYSICAL AMOUNT",
+      "value": "163.00 kg",
+      "sub": "Traced amount: 163.00 kg"
+    }
+  ],
+  "battery.right": [
+    {
+      "label": "HAZARDOUS COMPONENTS",
+      "value": "Reported"
+    },
+    {
+      "label": "ESG PERFORMANCE",
+      "value": "Reported"
+    },
+    {
+      "label": "COUNTRY",
+      "value": "Australia"
+    }
+  ],
+  "documents": [
+    {
+      "title": "EU Declaration of Conformity (PDF)",
+      "url": "https://example.com/doc/doc.pdf",
+      "version": "1",
+      "language": "EN"
+    },
+    {
+      "title": "Instructions (PDF)",
+      "url": "https://example.com/doc/instrukcja.pdf",
+      "version": "2",
+      "language": "PL"
+    }
+  ],
+  "video": {
+    "url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+    "note": "External link (MVP)."
+  },
+  "wasteInfo": {
+    "pl": {
+      "a_prevention": "Unikaj głębokiego rozładowania. Przechowuj w suchym miejscu. Nie przegrzewaj.",
+      "b_collectionRole": "Oddawaj zużyte baterie do punktów zbiórki. Nie wyrzucaj do odpadów zmieszanych.",
+      "c_whereToReturn": "PSZOK lub sklepy przyjmujące zużyte baterie.",
+      "d_safety": "Nie zgniataj, nie przebijaj. Zabezpiecz styki przed zwarciem.",
+      "e_labelsMeaning": "Symbol przekreślonego kosza oznacza selektywną zbiórkę. Cd/Pb jeśli dotyczy.",
+      "f_healthEnvironment": "Niewłaściwa utylizacja szkodzi środowisku i zdrowiu. Oddawaj do punktów zbiórki."
+    },
+    "en": {
+      "a_prevention": "Avoid deep discharge. Store in a dry place. Do not overheat.",
+      "b_collectionRole": "Return used batteries to collection points. Do not dispose with mixed waste.",
+      "c_whereToReturn": "Use local collection points or retailers accepting used batteries.",
+      "d_safety": "Do not crush or puncture. Prevent short-circuit (tape the terminals).",
+      "e_labelsMeaning": "Crossed-out bin means separate collection. Cd/Pb marks if applicable.",
+      "f_healthEnvironment": "Incorrect disposal harms health and environment. Use collection points."
+    }
+  }
+}

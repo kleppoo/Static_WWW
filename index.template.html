@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Battery Info</title>
+  <meta name="description" content="Publiczna strona informacyjna o baterii (nie paszport). Stały link pod QR." />
+  <link rel="stylesheet" href="./assets/styles.css" />
+</head>
+
+<body>
+  <a class="skip" href="#main">Przejdź do treści</a>
+
+  <!-- Top navigation like on screenshot -->
+  <header class="topbar">
+    <div class="wrap topbar__inner">
+      <div class="brand">
+        <img class="brand__logo" src="./assets/logo.svg" alt="Logo" />
+        <div class="brand__text">
+          <div class="brand__name" data-bind="tenant.name">Battery QR</div>
+          <div class="brand__sub">Public Battery Info</div>
+        </div>
+      </div>
+
+      <nav class="topbar__nav" aria-label="Skróty">
+        <button class="chip chip--active" type="button" data-action="lang" data-lang="pl" aria-pressed="true">PL</button>
+        <button class="chip" type="button" data-action="lang" data-lang="en" aria-pressed="false">EN</button>
+        <a class="chip chip--ghost" href="#docs">Docs</a>
+        <a class="chip chip--ghost" href="#safety">Safety</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Header band + title -->
+  <section class="hero">
+    <div class="wrap">
+      <div class="crumbs" aria-label="Breadcrumb">
+        <span class="crumbs__dim">Battery</span>
+        <span class="crumbs__sep">/</span>
+        <span class="crumbs__link" data-bind="page.code">b/abc123</span>
+      </div>
+
+      <h1 class="hero__title">
+        <span data-bind="battery.model">ACME-TRIM-01</span>
+        <span class="hero__titleSep">|</span>
+        <span data-bind="battery.brand">Brand</span>
+        <span class="hero__titleSep">|</span>
+        <span data-bind="battery.variant">Variant</span>
+      </h1>
+
+      <div class="hero__meta">
+        <span class="pill" data-bind="battery.categoryLabel">BATTERY INFORMATION</span>
+        <span class="metaText">
+          Published: <span data-bind="page.publishedAt">2026-01-10</span>
+          • v<span data-bind="page.version">1</span>
+        </span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tabs (like screenshot) -->
+  <section class="tabsBar">
+    <div class="wrap">
+      <div class="tabs" role="tablist" aria-label="Sekcje">
+        <button class="tab is-active" type="button" role="tab"
+                aria-selected="true" data-tab="battery">
+          BATTERY INFORMATION
+        </button>
+        <button class="tab" type="button" role="tab"
+                aria-selected="false" data-tab="docs">
+          DOCUMENTS
+        </button>
+        <button class="tab" type="button" role="tab"
+                aria-selected="false" data-tab="safety">
+          INSTRUCTIONS & SAFETY
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <main id="main" class="wrap content">
+    <!-- TAB: BATTERY -->
+    <section class="panel is-visible" data-panel="battery">
+      <div class="grid3">
+        <div class="metricCol" data-metrics="battery.left"></div>
+        <div class="metricCol" data-metrics="battery.middle"></div>
+        <div class="metricCol" data-metrics="battery.right"></div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="twoCols">
+        <div class="card">
+          <h2 class="card__title">Manufacturer</h2>
+          <div class="text" data-bind="manufacturer.name">—</div>
+          <div class="text muted" data-bind="manufacturer.address">—</div>
+          <div class="text">
+            <span class="muted">Email:</span> <span data-bind="manufacturer.email">—</span><br/>
+            <span class="muted">Web:</span> <span data-bind="manufacturer.website">—</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2 class="card__title">Identifiers</h2>
+          <div class="kv">
+            <div class="kv__row"><div class="kv__k">Code (QR path)</div><div class="kv__v" data-bind="page.code">—</div></div>
+            <div class="kv__row"><div class="kv__k">Permalink</div><div class="kv__v"><a data-bind-href="page.permalink" href="#" target="_blank" rel="noreferrer">open</a></div></div>
+            <div class="kv__row"><div class="kv__k">Batch/Serial/Product ID</div><div class="kv__v" data-bind="battery.idValue">—</div></div>
+            <div class="kv__row"><div class="kv__k">Manufactured</div><div class="kv__v" data-bind="battery.manufactureDate">—</div></div>
+          </div>
+
+          <p class="hint">
+            Później panel admina będzie generował ten plik na podstawie danych i publikował jako statyczny HTML.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB: DOCS -->
+    <section class="panel" data-panel="docs" id="docs">
+      <div class="card">
+        <h2 class="card__title">Documents</h2>
+        <ul class="docs" data-docs></ul>
+      </div>
+
+      <div class="card" style="margin-top:14px">
+        <h2 class="card__title">Video</h2>
+        <p class="text muted" data-i18n="video.note">
+          Wideo jest linkiem zewnętrznym (MVP). Otwórz w nowej karcie:
+        </p>
+        <div class="videoRow" data-video></div>
+      </div>
+    </section>
+
+    <!-- TAB: SAFETY -->
+    <section class="panel" data-panel="safety" id="safety">
+      <div class="grid2">
+        <div class="card">
+          <h2 class="card__title">Hazardous substances</h2>
+          <ul class="list" data-list="battery.hazardousSubstances"></ul>
+
+          <div class="dividerSmall"></div>
+
+          <h2 class="card__title">Critical raw materials</h2>
+          <ul class="list" data-list="battery.criticalRawMaterials"></ul>
+
+          <div class="dividerSmall"></div>
+
+          <h2 class="card__title">Extinguishing agent</h2>
+          <div class="text" data-bind="battery.extinguishingAgent.pl">—</div>
+        </div>
+
+        <div class="card">
+          <h2 class="card__title">Instructions & waste (a–f)</h2>
+
+          <details class="acc">
+            <summary>(a) Waste prevention</summary>
+            <div class="acc__body" data-bind-html="wasteInfo.pl.a_prevention">—</div>
+          </details>
+
+          <details class="acc">
+            <summary>(b) Separate collection</summary>
+            <div class="acc__body" data-bind-html="wasteInfo.pl.b_collectionRole">—</div>
+          </details>
+
+          <details class="acc">
+            <summary>(c) Where to return</summary>
+            <div class="acc__body" data-bind-html="wasteInfo.pl.c_whereToReturn">—</div>
+          </details>
+
+          <details class="acc">
+            <summary>(d) Safety</summary>
+            <div class="acc__body" data-bind-html="wasteInfo.pl.d_safety">—</div>
+          </details>
+
+          <details class="acc">
+            <summary>(e) Meaning of labels</summary>
+            <div class="acc__body" data-bind-html="wasteInfo.pl.e_labelsMeaning">—</div>
+          </details>
+
+          <details class="acc">
+            <summary>(f) Health & environment</summary>
+            <div class="acc__body" data-bind-html="wasteInfo.pl.f_healthEnvironment">—</div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="muted">
+        Publiczna strona informacyjna (nie paszport). Bez danych osobowych.
+      </div>
+    </footer>
+  </main>
+
+  <!-- Build step wstrzyknie tu JSON jako application/json -->
+  <script id="__PAGE_DATA__" type="application/json"></script>
+  <script src="./assets/app.js" defer></script>
+</body>
+</html>
