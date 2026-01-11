@@ -106,6 +106,27 @@
               <span class="infoValue" data-bind="battery.status">—</span>
             </div>
           </div>
+          <div style="margin-top:16px;padding-top:12px;border-top:1px solid #e0e0e0;">
+            <h4 style="font-size:13px;font-weight:700;margin-bottom:8px;" data-lang-content data-pl="Producent" data-en="Manufacturer">Producent</h4>
+            <div class="infoRow">
+              <span class="infoLabel" data-lang-content data-pl="Nazwa:" data-en="Name:">Nazwa:</span>
+              <span class="infoValue" data-bind="manufacturer.name">—</span>
+            </div>
+            <div class="infoRow">
+              <span class="infoLabel" data-lang-content data-pl="Adres:" data-en="Address:">Adres:</span>
+              <span class="infoValue" data-bind="manufacturer.address">—</span>
+            </div>
+            <div class="infoRow">
+              <span class="infoLabel" data-lang-content data-pl="Kraj:" data-en="Country:">Kraj:</span>
+              <span class="infoValue" data-bind="manufacturer.country">—</span>
+            </div>
+            <div class="infoRow">
+              <span class="infoLabel" data-lang-content data-pl="Kontakt:" data-en="Contact:">Kontakt:</span>
+              <span class="infoValue">
+                <span data-bind="manufacturer.email">—</span>
+              </span>
+            </div>
+          </div>
         </div>
 
         <!-- IDs -->
@@ -143,55 +164,30 @@
 
     <div class="divider"></div>
 
-    <!-- SECTION: EU Responsible Entity & Importer -->
+    <!-- SECTION: EU Responsible Entity -->
     <section class="section" id="eu-entity">
-      <h2 class="section__title" data-lang-content data-pl="Podmiot odpowiedzialny w UE / Wprowadzający do obrotu w UE" data-en="EU Responsible Entity / EU Importer">Podmiot odpowiedzialny w UE / Wprowadzający do obrotu w UE</h2>
+      <h2 class="section__title" data-lang-content data-pl="Podmiot odpowiedzialny w UE / Wprowadzający do obrotu" data-en="EU Responsible Entity / Importer">Podmiot odpowiedzialny w UE / Wprowadzający do obrotu</h2>
       
-      <div class="grid2">
-        <div class="card">
-          <h3 class="card__title" data-lang-content data-pl="Podmiot odpowiedzialny" data-en="Responsible Entity">Podmiot odpowiedzialny</h3>
-          <div class="infoRow">
-            <span class="infoLabel" data-lang-content data-pl="Nazwa firmy:" data-en="Company name:">Nazwa firmy:</span>
-            <span class="infoValue" data-bind="euResponsibleEntity.name">—</span>
-          </div>
-          <div class="infoRow">
-            <span class="infoLabel" data-lang-content data-pl="Adres:" data-en="Address:">Adres:</span>
-            <span class="infoValue" data-bind="euResponsibleEntity.address">—</span>
-          </div>
-          <div class="infoRow">
-            <span class="infoLabel" data-lang-content data-pl="Kraj:" data-en="Country:">Kraj:</span>
-            <span class="infoValue" data-bind="euResponsibleEntity.country">—</span>
-          </div>
-          <div class="infoRow">
-            <span class="infoLabel" data-lang-content data-pl="Email / WWW:" data-en="Email / WWW:">Email / WWW:</span>
-            <span class="infoValue">
-              <span data-bind="euResponsibleEntity.email">—</span>
-              <span data-bind="euResponsibleEntity.website"></span>
-            </span>
-          </div>
+      <div class="card">
+        <h3 class="card__title" data-lang-content data-pl="Podmiot odpowiedzialny" data-en="Responsible Entity">Podmiot odpowiedzialny</h3>
+        <div class="infoRow">
+          <span class="infoLabel" data-lang-content data-pl="Nazwa firmy:" data-en="Company name:">Nazwa firmy:</span>
+          <span class="infoValue" data-bind="euResponsibleEntity.name">—</span>
         </div>
-
-        <div class="card">
-          <h3 class="card__title" data-lang-content data-pl="Producent" data-en="Manufacturer">Producent</h3>
-          <div class="infoRow">
-            <span class="infoLabel" data-lang-content data-pl="Nazwa:" data-en="Name:">Nazwa:</span>
-            <span class="infoValue" data-bind="manufacturer.name">—</span>
-          </div>
-          <div class="infoRow">
-            <span class="infoLabel" data-lang-content data-pl="Adres:" data-en="Address:">Adres:</span>
-            <span class="infoValue" data-bind="manufacturer.address">—</span>
-          </div>
-          <div class="infoRow">
-            <span class="infoLabel" data-lang-content data-pl="Kraj:" data-en="Country:">Kraj:</span>
-            <span class="infoValue" data-bind="manufacturer.country">—</span>
-          </div>
-          <div class="infoRow">
-            <span class="infoLabel" data-lang-content data-pl="Email / WWW:" data-en="Email / WWW:">Email / WWW:</span>
-            <span class="infoValue">
-              <span data-bind="manufacturer.email">—</span>
-              <span data-bind="manufacturer.website"></span>
-            </span>
-          </div>
+        <div class="infoRow">
+          <span class="infoLabel" data-lang-content data-pl="Adres:" data-en="Address:">Adres:</span>
+          <span class="infoValue" data-bind="euResponsibleEntity.address">—</span>
+        </div>
+        <div class="infoRow">
+          <span class="infoLabel" data-lang-content data-pl="Kraj:" data-en="Country:">Kraj:</span>
+          <span class="infoValue" data-bind="euResponsibleEntity.country">—</span>
+        </div>
+        <div class="infoRow">
+          <span class="infoLabel" data-lang-content data-pl="Email / WWW:" data-en="Email / WWW:">Email / WWW:</span>
+          <span class="infoValue">
+            <span data-bind="euResponsibleEntity.email">—</span>
+            <span data-bind="euResponsibleEntity.website"></span>
+          </span>
         </div>
       </div>
     </section>
@@ -221,21 +217,44 @@
             <span class="infoLabel" data-lang-content data-pl="Energia:" data-en="Energy:">Energia:</span>
             <span class="infoValue" data-bind="battery.energy">—</span>
           </div>
+          <div class="infoRow">
+            <span class="infoLabel" data-lang-content data-pl="Fizyczne:" data-en="Physical:">Fizyczne:</span>
+            <span class="infoValue">
+              <span data-bind="battery.mass">—</span>
+              <span class="muted"> • </span>
+              <span data-bind="battery.dimensions">—</span>
+            </span>
+          </div>
         </div>
 
         <div class="card">
-          <h3 class="card__title" data-lang-content data-pl="Fizyczne" data-en="Physical">Fizyczne</h3>
+          <h3 class="card__title" data-lang-content data-pl="Skład i bezpieczeństwo" data-en="Composition & Safety">Skład i bezpieczeństwo</h3>
           <div class="infoRow">
-            <span class="infoLabel" data-lang-content data-pl="Masa:" data-en="Mass:">Masa:</span>
-            <span class="infoValue" data-bind="battery.mass">—</span>
+            <span class="infoLabel" data-lang-content data-pl="Skład chemiczny (oznaczenie):" data-en="Chemical designation:">Skład chemiczny (oznaczenie):</span>
+            <span class="infoValue" data-bind="battery.chemistry">—</span>
           </div>
-          <div class="infoRow">
-            <span class="infoLabel" data-lang-content data-pl="Wymiary:" data-en="Dimensions:">Wymiary:</span>
-            <span class="infoValue" data-bind="battery.dimensions">—</span>
+
+          <div class="infoRow" style="align-items:flex-start;">
+            <span class="infoLabel" data-lang-content data-pl="Substancje niebezpieczne (art. 6):" data-en="Hazardous substances (Art. 6):">Substancje niebezpieczne (art. 6):</span>
+            <span class="infoValue">
+              <ul class="miniList">
+                <!-- HAZARDOUS -->
+              </ul>
+            </span>
           </div>
+
+          <div class="infoRow" style="align-items:flex-start;">
+            <span class="infoLabel" data-lang-content data-pl="Surowce krytyczne (&gt;0,1% masy):" data-en="Critical raw materials (&gt;0.1% w/w):">Surowce krytyczne (&gt;0,1% masy):</span>
+            <span class="infoValue">
+              <ul class="miniList">
+                <!-- CRITICAL -->
+              </ul>
+            </span>
+          </div>
+
           <div class="infoRow">
-            <span class="infoLabel" data-lang-content data-pl="Klasa IP:" data-en="IP rating:">Klasa IP:</span>
-            <span class="infoValue" data-bind="battery.ipRating">—</span>
+            <span class="infoLabel" data-lang-content data-pl="Środki gaśnicze:" data-en="Extinguishing agent:">Środki gaśnicze:</span>
+            <span class="infoValue" data-lang-content data-pl="<!-- EXTINGUISHING_PL -->" data-en="<!-- EXTINGUISHING_EN -->"><!-- EXTINGUISHING_PL --></span>
           </div>
         </div>
 
@@ -281,21 +300,28 @@
               <div class="pictogram__text" data-lang-content data-pl="Bateria do recyklingu" data-en="Battery for recycling">Bateria do recyklingu</div>
             </div>
             <div class="pictogram">
-              <div class="pictogram__icon">🗑️</div>
-              <div class="pictogram__text" data-lang-content data-pl="Nie wyrzucać do zwykłych śmieci" data-en="Do not dispose in regular trash">Nie wyrzucać do zwykłych śmieci</div>
-            </div>
-            <div class="pictogram">
               <div class="pictogram__icon">
                 <svg width="40" height="40" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                  <!-- Wheelie bin -->
-                  <rect x="30" y="35" width="40" height="45" fill="none" stroke="currentColor" stroke-width="3"/>
-                  <rect x="25" y="30" width="50" height="5" fill="none" stroke="currentColor" stroke-width="3"/>
-                  <circle cx="38" cy="82" r="4" fill="none" stroke="currentColor" stroke-width="2"/>
-                  <circle cx="62" cy="82" r="4" fill="none" stroke="currentColor" stroke-width="2"/>
-                  <rect x="45" y="40" width="10" height="15" fill="none" stroke="currentColor" stroke-width="2"/>
-                  <!-- Cross (X) -->
-                  <line x1="15" y1="15" x2="85" y2="85" stroke="currentColor" stroke-width="4"/>
-                  <line x1="85" y1="15" x2="15" y2="85" stroke="currentColor" stroke-width="4"/>
+                  <!-- WEEE symbol (closer to the attached icon): wheelie bin + base bar + cross -->
+                  <!-- Base bar -->
+                  <line x1="14" y1="92" x2="86" y2="92" stroke="#111" stroke-width="4" />
+
+                  <!-- Bin body -->
+                  <rect x="28" y="28" width="44" height="56" fill="none" stroke="#111" stroke-width="3" />
+                  <!-- Inner marking -->
+                  <line x1="34" y1="52" x2="66" y2="52" stroke="#111" stroke-width="3" />
+
+                  <!-- Lid + handle -->
+                  <line x1="24" y1="28" x2="76" y2="28" stroke="#111" stroke-width="3" />
+                  <path d="M 26 26 Q 50 10 74 26" fill="none" stroke="#111" stroke-width="3" />
+
+                  <!-- Wheel (single, as in the pictogram) -->
+                  <circle cx="74" cy="84" r="8" fill="none" stroke="#111" stroke-width="3" />
+                  <circle cx="74" cy="84" r="3" fill="#111" />
+
+                  <!-- Cross -->
+                  <line x1="10" y1="10" x2="90" y2="90" stroke="#111" stroke-width="6" stroke-linecap="round" />
+                  <line x1="90" y1="10" x2="10" y2="90" stroke="#111" stroke-width="6" stroke-linecap="round" />
                 </svg>
               </div>
               <div class="pictogram__text" data-lang-content data-pl="Nie wyrzucaj do pojemnika na niesegregowane odpady komunalne" data-en="Do not dispose as unsorted municipal waste">Nie wyrzucaj do pojemnika na niesegregowane odpady komunalne</div>

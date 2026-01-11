@@ -14,7 +14,7 @@
     "variant": "NIO",
     "categoryLabel": "BATTERY INFORMATION",
     "idValue": "BATCH-2026-01 / SN-000123",
-    "chemistry": "Li-ion",
+    "chemistry": "Li-Ion (NMC)",
     "capacity": "2000 mAh",
     "voltage": "3.7 V",
     "energy": "7.4 Wh",
@@ -30,10 +30,14 @@
     "chargerType": "Li-ion 5V 1A max",
     "lifespan": "≥500 cycles (80% capacity)",
     "hazardousSubstances": [
-      "Electrolyte (organic solvents)"
+      "Elektrolit (rozpuszczalniki organiczne)",
+      "Kadm (Cd) — 0,02% m/m (przykład; jeśli przekracza próg z art. 6)",
+      "Ołów (Pb) — 0,15% m/m (przykład; jeśli przekracza próg z art. 6)"
     ],
     "criticalRawMaterials": [
-      "Cobalt"
+      "Kobalt — 0,12% m/m",
+      "Lit — 0,35% m/m",
+      "Grafit naturalny — 2,10% m/m"
     ],
     "extinguishingAgent": {
       "pl": "Proszek ABC / CO₂ (zgodnie z SDS)",
