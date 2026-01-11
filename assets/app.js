@@ -22,6 +22,16 @@ function setupTabs() {
   tabs.forEach((t) => {
     t.addEventListener("click", () => activate(t.getAttribute("data-tab")));
   });
+  
+  // Handle buttons with data-tab-target (e.g., "Go to Safety" button)
+  document.querySelectorAll("[data-tab-target]").forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+      e.preventDefault();
+      const targetTab = btn.getAttribute("data-tab-target");
+      activate(targetTab);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+  });
 
   const hash = (location.hash || "").replace("#", "");
   if (hash === "docs") activate("docs");
