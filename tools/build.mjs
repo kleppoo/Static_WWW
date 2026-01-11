@@ -2,6 +2,8 @@ import fs from "node:fs";
 import path from "node:path";
 import crypto from "node:crypto";
 
+const shouldMinify = process.argv.includes("--minify") || process.env.MINIFY === "1";
+
 const root = process.cwd();
 const dataPath = path.join(root, "data", "page.json");
 const cssPath = path.join(root, "assets", "styles.css");
@@ -50,7 +52,7 @@ function escapeHtml(str) {
     .replace(/'/g, "&#039;");
 }
 
-function buildPage(tplName, outputName, data, css, js, logoDataUri) {
+async function buildPage(tplName, outputName, data, css, js, logoDataUri, htmlMinifyFn) {
   const tplPath = path.join(root, tplName);
   let html = fs.readFileSync(tplPath, "utf8");
   
@@ -172,6 +174,20 @@ function buildPage(tplName, outputName, data, css, js, logoDataUri) {
     `<meta charset="utf-8" />\n  <meta name="generator" content="Battery Info Static Builder v2.0 (Hardcoded)" />\n  <meta name="build-date" content="${buildDate}" />`
   );
 
+  // 13. Optional HTML minification (build-time only)
+  if (htmlMinifyFn) {
+    html = await htmlMinifyFn(html, {
+      collapseWhitespace: true,
+      conservativeCollapse: true,
+      removeComments: true,
+      removeRedundantAttributes: true,
+      removeEmptyAttributes: false,
+      keepClosingSlash: true,
+      minifyCSS: false,
+      minifyJS: false,
+    });
+  }
+
   // Write output
   const outputPath = path.join(distDir, outputName);
   fs.writeFileSync(outputPath, html, "utf8");
@@ -190,13 +206,13 @@ function buildPage(tplName, outputName, data, css, js, logoDataUri) {
 }
 
 // Main build process
-console.log("🔨 Building static HTML pages...\n");
+console.log(`🔨 Building static HTML pages...${shouldMinify ? " (minified)" : ""}\n`);
 
 // Read all source files once
 const dataJson = fs.readFileSync(dataPath, "utf8");
 const data = JSON.parse(dataJson);
-const css = fs.readFileSync(cssPath, "utf8");
-const js = fs.readFileSync(jsPath, "utf8");
+const cssRaw = fs.readFileSync(cssPath, "utf8");
+const jsRaw = fs.readFileSync(jsPath, "utf8");
 const logo = fs.readFileSync(logoPath, "utf8");
 
 // Convert SVG to data URI
@@ -209,11 +225,35 @@ ensureDir(distDir);
 safeUnlink(path.join(distDir, "battery-info.html"));
 safeUnlink(path.join(distDir, "battery-info.html.sha256"));
 
+let css = cssRaw;
+let js = jsRaw;
+let htmlMinifyFn = null;
+
+if (shouldMinify) {
+  const [{ minify: minifyHtml }, { minify: minifyJs }, { minify: minifyCss }] = await Promise.all([
+    import("html-minifier-terser"),
+    import("terser"),
+    import("csso"),
+  ]);
+
+  css = minifyCss(cssRaw, { restructure: true }).css;
+  const jsResult = await minifyJs(jsRaw, {
+    compress: true,
+    mangle: false,
+    format: { comments: false },
+  });
+  js = jsResult.code || jsRaw;
+  htmlMinifyFn = minifyHtml;
+}
+
 // Build all pages
-const buildResults = templates.map(({ tpl, out }) => {
+const buildResults = [];
+for (const { tpl, out } of templates) {
   console.log(`📄 Building ${out}...`);
-  return buildPage(tpl, out, data, css, js, logoDataUri);
-});
+  // eslint-disable-next-line no-await-in-loop
+  const result = await buildPage(tpl, out, data, css, js, logoDataUri, htmlMinifyFn);
+  buildResults.push(result);
+}
 
 // Generate overall metadata
 const metadata = {

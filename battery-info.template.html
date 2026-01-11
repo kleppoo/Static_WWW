@@ -1,14 +1,4 @@
 <!doctype html>
-<!--
-  ====================================================================
-  BATTERY INFO - PUBLIC LANDING PAGE (QR SCAN)
-  ====================================================================
-  
-  Self-contained, works offline, designed for 10+ year stability.
-  Minimal JavaScript (only UI interactions).
-  All data hardcoded in HTML by build process.
-  ====================================================================
--->
 <html lang="pl">
 <head>
   <meta charset="utf-8" />
@@ -60,7 +50,7 @@
       <div class="hero__meta">
         <span class="pill" data-bind="battery.status">NEW</span>
         <span class="metaText">
-          Public ID: <strong data-bind="page.code">b/abc123</strong>
+          Public ID: <strong data-copy="page.code" data-bind="page.code">b/abc123</strong>
           <button class="btnCopy" data-action="copy-id" title="Copy ID">📋</button>
         </span>
       </div>
@@ -444,10 +434,11 @@
       <div class="footerGrid">
         <div>
           <h4 data-lang-content data-pl="Prowadzenie strony" data-en="Website Management">Prowadzenie strony</h4>
-          <p class="muted small" data-lang-content 
-             data-pl="Stronę prowadzi i utrzymuje: <strong data-bind=\"tenant.name\">ACME Batteries</strong>" 
-             data-en="Website managed and maintained by: <strong data-bind=\"tenant.name\">ACME Batteries</strong>">
-            Stronę prowadzi i utrzymuje: <strong data-bind="tenant.name">ACME Batteries</strong>
+          <p class="muted small">
+            <span data-lang-content 
+                  data-pl="Stronę prowadzi i utrzymuje:" 
+                  data-en="Website managed and maintained by:">Stronę prowadzi i utrzymuje:</span>
+            <strong data-bind="tenant.name">ACME Batteries</strong>
           </p>
         </div>
         <div>
@@ -509,8 +500,8 @@
             <div class="emergencyBox">
               <h4>🔥 <span data-lang-content data-pl="Dym / Pożar" data-en="Smoke / Fire">Dym / Pożar</span></h4>
               <p data-lang-content 
-                 data-pl="1. Ewakuuj pomieszczenie<br>2. Zadzwoń 112/998<br>3. Gaś środkiem ABC/CO₂" 
-                 data-en="1. Evacuate room<br>2. Call emergency<br>3. Extinguish with ABC/CO₂">
+                  data-pl="1. Ewakuuj pomieszczenie&lt;br&gt;2. Zadzwoń 112/998&lt;br&gt;3. Gaś środkiem ABC/CO₂" 
+                  data-en="1. Evacuate room&lt;br&gt;2. Call emergency&lt;br&gt;3. Extinguish with ABC/CO₂">
                 1. Ewakuuj pomieszczenie<br>
                 2. Zadzwoń 112/998<br>
                 3. Gaś środkiem ABC/CO₂
@@ -519,8 +510,8 @@
             <div class="emergencyBox">
               <h4>💧 <span data-lang-content data-pl="Wyciek / Uszkodzenie" data-en="Leak / Damage">Wyciek / Uszkodzenie</span></h4>
               <p data-lang-content 
-                 data-pl="1. Nie dotykaj gołymi rękami<br>2. Wietrz pomieszczenie<br>3. Umieść w szczelnym pojemniku<br>4. Oddaj do utylizacji" 
-                 data-en="1. Do not touch bare-handed<br>2. Ventilate room<br>3. Place in sealed container<br>4. Dispose properly">
+                  data-pl="1. Nie dotykaj gołymi rękami&lt;br&gt;2. Wietrz pomieszczenie&lt;br&gt;3. Umieść w szczelnym pojemniku&lt;br&gt;4. Oddaj do utylizacji" 
+                  data-en="1. Do not touch bare-handed&lt;br&gt;2. Ventilate room&lt;br&gt;3. Place in sealed container&lt;br&gt;4. Dispose properly">
                 1. Nie dotykaj gołymi rękami<br>
                 2. Wietrz pomieszczenie<br>
                 3. Umieść w szczelnym pojemniku<br>
@@ -530,8 +521,8 @@
             <div class="emergencyBox">
               <h4>💨 <span data-lang-content data-pl="Puchnięcie / Wybrzuszenie" data-en="Swelling / Bulging">Puchnięcie / Wybrzuszenie</span></h4>
               <p data-lang-content 
-                 data-pl="1. NATYCHMIAST przestań używać<br>2. Odłącz od urządzenia<br>3. Nie ładuj<br>4. Oddaj do utylizacji" 
-                 data-en="1. STOP using immediately<br>2. Disconnect from device<br>3. Do not charge<br>4. Dispose properly">
+                  data-pl="1. NATYCHMIAST przestań używać&lt;br&gt;2. Odłącz od urządzenia&lt;br&gt;3. Nie ładuj&lt;br&gt;4. Oddaj do utylizacji" 
+                  data-en="1. STOP using immediately&lt;br&gt;2. Disconnect from device&lt;br&gt;3. Do not charge&lt;br&gt;4. Dispose properly">
                 1. NATYCHMIAST przestań używać<br>
                 2. Odłącz od urządzenia<br>
                 3. Nie ładuj<br>
@@ -667,18 +658,20 @@
       <div class="footerGrid">
         <div>
           <h4 data-lang-content data-pl="Prowadzenie strony" data-en="Website Management">Prowadzenie strony</h4>
-          <p class="muted small" data-lang-content 
-             data-pl="Stronę prowadzi i utrzymuje: <strong data-bind=\"tenant.name\">ACME Batteries</strong>" 
-             data-en="Website managed and maintained by: <strong data-bind=\"tenant.name\">ACME Batteries</strong>">
-            Stronę prowadzi i utrzymuje: <strong data-bind="tenant.name">ACME Batteries</strong>
+          <p class="muted small">
+            <span data-lang-content 
+                  data-pl="Stronę prowadzi i utrzymuje:" 
+                  data-en="Website managed and maintained by:">Stronę prowadzi i utrzymuje:</span>
+            <strong data-bind="tenant.name">ACME Batteries</strong>
           </p>
         </div>
         <div>
           <h4 data-lang-content data-pl="Odpowiedzialność za treść" data-en="Content Responsibility">Odpowiedzialność za treść</h4>
-          <p class="muted small" data-lang-content 
-             data-pl="Za treść informacji odpowiada podmiot wprowadzający produkt do obrotu: <strong data-bind=\"manufacturer.name\">—</strong>" 
-             data-en="Content responsibility lies with the entity placing the product on the market: <strong data-bind=\"manufacturer.name\">—</strong>">
-            Za treść informacji odpowiada podmiot wprowadzający produkt do obrotu: <strong data-bind="manufacturer.name">—</strong>
+          <p class="muted small">
+            <span data-lang-content 
+                  data-pl="Za treść informacji odpowiada podmiot wprowadzający produkt do obrotu:" 
+                  data-en="Content responsibility lies with the entity placing the product on the market:">Za treść informacji odpowiada podmiot wprowadzający produkt do obrotu:</span>
+            <strong data-bind="manufacturer.name">—</strong>
           </p>
         </div>
         <div>

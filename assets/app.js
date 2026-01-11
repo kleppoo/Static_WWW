@@ -1,6 +1,3 @@
-// Minimal JavaScript for UI interactions only
-// All data is hardcoded in HTML by build process
-
 function setupTabs() {
   const tabs = Array.from(document.querySelectorAll(".tab"));
   const panels = Array.from(document.querySelectorAll(".panel"));
@@ -44,6 +41,12 @@ function setupLangToggle() {
   
   let lang = "pl";
 
+  function decodeHtmlEntities(str) {
+    const textarea = document.createElement("textarea");
+    textarea.innerHTML = str;
+    return textarea.value;
+  }
+
   function applyLang(next) {
     lang = next;
     btns.forEach((b) => {
@@ -55,7 +58,8 @@ function setupLangToggle() {
     // Switch content for elements with data-lang-content
     document.querySelectorAll("[data-lang-content]").forEach((el) => {
       const content = el.getAttribute(`data-${lang}`);
-      if (content) el.innerHTML = content; // innerHTML for HTML content
+      if (!content) return;
+      el.innerHTML = decodeHtmlEntities(content);
     });
   }
 
@@ -68,7 +72,7 @@ function setupCopyID() {
   if (!btn) return;
 
   btn.addEventListener("click", async () => {
-    const idElement = document.querySelector('[data-bind="page.code"]');
+    const idElement = document.querySelector('[data-copy="page.code"]');
     if (!idElement) return;
     
     const id = idElement.textContent.trim();

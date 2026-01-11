@@ -9,6 +9,11 @@
     "dev": "python -m http.server 5173",
     "dev:node": "npx serve ."
   },
+  "devDependencies": {
+    "csso": "^5.0.5",
+    "html-minifier-terser": "^7.2.0",
+    "terser": "^5.36.0"
+  },
   "keywords": [
     "battery",
     "static",

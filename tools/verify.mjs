@@ -56,7 +56,7 @@ if (currentChecksum === expectedChecksum) {
 
 // Additional checks
 const checks = [
-  { name: "DOCTYPE declaration", test: htmlContent.startsWith("<!doctype html>") },
+  { name: "DOCTYPE declaration", test: /^<!doctype html>/i.test(htmlContent.trimStart()) },
   { name: "Inline CSS present", test: htmlContent.includes("<style>") },
   { name: "Inline JS present", test: htmlContent.includes("<script>") && htmlContent.includes("function setupTabs()") },
   { name: "Data hardcoded in HTML", test: !htmlContent.includes('id="__PAGE_DATA__"') && htmlContent.includes("ACME-TRIM-01") },

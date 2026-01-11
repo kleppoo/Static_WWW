@@ -77,7 +77,16 @@ npm run build
 node tools/build.mjs
 ```
 
-**Wynik**: dwa pliki HTML (~24KB + ~35KB), które:
+Minifikacja (mniejsze pliki HTML):
+
+```bash
+# PowerShell:
+$env:MINIFY=1; npm run build
+# albo:
+npm run build -- --minify
+```
+
+**Wynik**: dwa pliki HTML (rozmiar zależy od minifikacji), które:
 - Działają offline przez 10+ lat bez aktualizacji
 - **Wszystkie dane wbudowane w HTML** (nie JSON)
 - **Działają bez JavaScript** - treść widoczna nawet gdy JS wyłączony
