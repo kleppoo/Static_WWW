@@ -1,0 +1,26 @@
+{
+  "name": "battery-info-static",
+  "version": "1.0.0",
+  "description": "Long-term archival static page for Battery Info (10+ year lifespan)",
+  "type": "module",
+  "scripts": {
+    "build": "node tools/build.mjs",
+    "verify": "node tools/verify.mjs",
+    "dev": "python -m http.server 5173",
+    "dev:node": "npx serve ."
+  },
+  "keywords": [
+    "battery",
+    "static",
+    "archival",
+    "long-term",
+    "standalone",
+    "offline"
+  ],
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "author": "",
+  "license": "UNLICENSED",
+  "private": true
+}
