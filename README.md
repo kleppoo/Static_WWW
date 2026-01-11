@@ -1,7 +1,7 @@
 # Battery Info Static (template)
 
 Statyczny template stron informacyjnych o bateriach w dwóch wersjach:
-- **battery-info.html** - strona po zeskanowaniu QR (dane techniczne, zgodność, dokumenty)
+- **index.html** - strona po zeskanowaniu QR (dane techniczne, zgodność, dokumenty)
 - **instructions-safety.html** - instrukcje użytkowania i bezpieczeństwa
 
 ## 🎯 Kluczowa cecha: 10-letnia trwałość
@@ -18,7 +18,7 @@ Wynikowe pliki HTML są **w pełni samodzielne** i zaprojektowane do działania 
 
 ## Architektura 2-stronowa
 
-### Strona główna: index.html (= battery-info.html)
+### Strona główna: index.html
 **Landing page** po zeskanowaniu kodu QR:
 - Identyfikacja baterii (model, ID, daty)
 - Parametry techniczne (napięcie, pojemność, wymiary)
@@ -38,7 +38,7 @@ Wynikowe pliki HTML są **w pełni samodzielne** i zaprojektowane do działania 
 - FAQ
 - Link powrotu do strony głównej ←
 
-**Uwaga**: `index.html` i `battery-info.html` to ten sam plik (kopia). Index.html jest stroną domyślną.
+**Uwaga**: build generuje tylko `index.html` jako stronę główną (bez dodatkowej kopii `battery-info.html`).
 
 ## Lokalny podgląd (DEV)
 **Nie otwieraj pliku podwójnym kliknięciem (file://)** — uruchom prosty serwer HTTP.
@@ -103,9 +103,8 @@ Sprawdza:
 
 ### Pliki w dist/
 
-- **`index.html`** - **strona główna** (landing page, identyczna z battery-info.html)
-- `battery-info.html` - kopia strony głównej
-- `battery-info.html.sha256` - checksum
+- **`index.html`** - **strona główna** (landing page)
+- `index.html.sha256` - checksum
 - `instructions-safety.html` - strona instrukcji i bezpieczeństwa
 - `instructions-safety.html.sha256` - checksum
 - `index.html.sha256` - checksum strony głównej

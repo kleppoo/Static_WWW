@@ -12,7 +12,7 @@ const distDir = path.join(root, "dist");
 const templates = [
   { 
     tpl: "battery-info.template.html", 
-    out: "battery-info.html" 
+    out: "index.html" 
   },
   { 
     tpl: "instructions-safety.template.html", 
@@ -21,6 +21,15 @@ const templates = [
 ];
 
 function ensureDir(p) { fs.mkdirSync(p, { recursive: true }); }
+
+function safeUnlink(filePath) {
+  try {
+    fs.unlinkSync(filePath);
+  } catch (err) {
+    if (err && err.code === "ENOENT") return;
+    throw err;
+  }
+}
 
 function sha256(content) {
   return crypto.createHash("sha256").update(content, "utf8").digest("hex");
@@ -196,32 +205,14 @@ const logoDataUri = `data:image/svg+xml;base64,${Buffer.from(logo).toString("bas
 // Ensure dist directory exists
 ensureDir(distDir);
 
+// Clean up legacy outputs from older builds
+safeUnlink(path.join(distDir, "battery-info.html"));
+safeUnlink(path.join(distDir, "battery-info.html.sha256"));
+
 // Build all pages
 const buildResults = templates.map(({ tpl, out }) => {
   console.log(`📄 Building ${out}...`);
   return buildPage(tpl, out, data, css, js, logoDataUri);
-});
-
-// Copy battery-info.html as index.html (main landing page)
-console.log("📄 Copying battery-info.html → index.html...");
-const batteryInfoPath = path.join(distDir, "battery-info.html");
-const indexPath = path.join(distDir, "index.html");
-fs.copyFileSync(batteryInfoPath, indexPath);
-
-// Generate checksum for index.html
-const indexContent = fs.readFileSync(indexPath, "utf8");
-const indexChecksum = sha256(indexContent);
-fs.writeFileSync(
-  path.join(distDir, "index.html.sha256"),
-  `${indexChecksum}  index.html\n`,
-  "utf8"
-);
-
-buildResults.push({
-  fileName: "index.html",
-  size: Buffer.byteLength(indexContent, "utf8"),
-  checksum: indexChecksum,
-  buildDate: buildResults[0].buildDate
 });
 
 // Generate overall metadata
