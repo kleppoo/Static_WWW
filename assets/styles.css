@@ -96,6 +96,27 @@ a:hover{ text-decoration:underline; }
   gap: 12px;
   flex-wrap:wrap;
 }
+
+/* QR Code in hero */
+.qrCode{
+  margin-top:16px;
+  text-align:center;
+}
+.qrCode svg{
+  border:2px solid rgba(255,255,255,.2);
+  border-radius:8px;
+  background:#fff;
+  padding:8px;
+}
+.qrLabel{
+  margin-top:8px;
+  font-size:11px;
+  color:rgba(255,255,255,.7);
+  text-transform:uppercase;
+  letter-spacing:.05em;
+  font-weight:700;
+}
+
 .pill{
   display:inline-flex;
   align-items:center;
@@ -223,6 +244,34 @@ a:hover{ text-decoration:underline; }
   border-bottom:1px solid #f0f0f0;
 }
 .warningItem:last-child{ border-bottom:none; }
+
+/* Pictograms grid */
+.pictograms{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+  margin-top:10px;
+}
+.pictogram{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  text-align:center;
+  padding:12px;
+  background:#f9fafb;
+  border-radius:8px;
+  border:1px solid #e5e7eb;
+}
+.pictogram__icon{
+  font-size:32px;
+  margin-bottom:8px;
+}
+.pictogram__text{
+  font-size:11px;
+  font-weight:700;
+  color:#374151;
+  line-height:1.3;
+}
 
 .warningList{
   margin:0;
@@ -543,6 +592,7 @@ a:hover{ text-decoration:underline; }
   .twoCols{ grid-template-columns: 1fr 1fr; }
   .emergencyGrid{ grid-template-columns: 1fr 1fr; }
   .footerGrid{ grid-template-columns: 1fr 1fr 1fr; }
+  .pictograms{ grid-template-columns: 1fr 1fr 1fr; }
 }
 @media print{
   .topbar, .tabsBar{ display:none !important; }
