@@ -1,6 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import crypto from "node:crypto";
+import * as QRCode from "qrcode";
 
 const shouldMinify = process.argv.includes("--minify") || process.env.MINIFY === "1";
 
@@ -67,6 +68,34 @@ async function buildPage(tplName, outputName, data, css, js, logoDataUri, htmlMi
     const value = get(data, path);
     return value ? `href="${escapeHtml(value)}"` : 'href="#"';
   });
+
+  // 2b. Generate QR code SVG (battery-info page only)
+  if (tplName.includes("battery-info")) {
+    const qrValue =
+      get(data, "page.qrValue") ||
+      get(data, "page.permalink") ||
+      get(data, "page.code") ||
+      "";
+
+    let qrSvg = '<p class="muted">—</p>';
+    if (qrValue) {
+      qrSvg = await QRCode.toString(String(qrValue), {
+        type: "svg",
+        errorCorrectionLevel: "M",
+        margin: 0,
+        color: { dark: "#000000", light: "#ffffff" },
+      });
+
+      // Keep SVG inline-friendly and let CSS control sizing
+      qrSvg = qrSvg
+        .replace(/<\?xml[^>]*>\s*/i, "")
+        .replace(/\s+width="[^"]*"/i, "")
+        .replace(/\s+height="[^"]*"/i, "")
+        .replace(/<svg\b/i, '<svg role="img" aria-label="QR code"');
+    }
+
+    html = html.replace(/<!-- QR_SVG -->/g, qrSvg);
+  }
 
   // 3. Generate metrics HTML from data (only for battery-info page)
   if (tplName.includes("battery-info")) {
