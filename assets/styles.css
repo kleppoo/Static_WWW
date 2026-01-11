@@ -97,7 +97,7 @@ a:hover{ text-decoration:underline; }
   flex-wrap:wrap;
 }
 
-/* QR Code in hero */
+/* QR Code in hero (now moved to Identifiers card) */
 .qrCode{
   margin-top:16px;
   text-align:center;
@@ -108,6 +108,18 @@ a:hover{ text-decoration:underline; }
   background:#fff;
   padding:8px;
 }
+.qrCode--inline{
+  margin-top:12px;
+  margin-bottom:12px;
+}
+.qrCode--inline svg{
+  border:2px solid #e0e0e0;
+  border-radius:6px;
+  background:#fff;
+  padding:6px;
+  width:100px;
+  height:100px;
+}
 .qrLabel{
   margin-top:8px;
   font-size:11px;
@@ -115,6 +127,10 @@ a:hover{ text-decoration:underline; }
   text-transform:uppercase;
   letter-spacing:.05em;
   font-weight:700;
+}
+.card .qrLabel{
+  color:#666;
+  font-size:10px;
 }
 
 .pill{
