@@ -1,0 +1,492 @@
+<!doctype html>
+<!--
+  ====================================================================
+  BATTERY INSTRUCTIONS & SAFETY
+  ====================================================================
+  
+  Self-contained, works offline, designed for 10+ year stability.
+  Minimal JavaScript (only UI interactions).
+  All data hardcoded in HTML by build process.
+  ====================================================================
+-->
+<html lang="pl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Instructions & Safety</title>
+  <meta name="description" content="Battery usage instructions and safety information" />
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="stylesheet" href="./assets/styles.css" />
+</head>
+
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <!-- HEADER -->
+  <header class="topbar">
+    <div class="wrap topbar__inner">
+      <div class="brand">
+        <img class="brand__logo" src="./assets/logo.svg" alt="Logo" />
+        <div class="brand__text">
+          <div class="brand__name">Instructions & Safety</div>
+          <div class="brand__sub"><span data-bind="battery.model">Battery</span> · <span data-bind="page.code">ID</span></div>
+        </div>
+      </div>
+
+      <nav class="topbar__nav" aria-label="Navigation">
+        <button class="chip chip--active" type="button" data-action="lang" data-lang="pl" aria-pressed="true">PL</button>
+        <button class="chip" type="button" data-action="lang" data-lang="en" aria-pressed="false">EN</button>
+        <a class="chip chip--ghost" href="./index.html">← Battery Info</a>
+        <!-- PDF_INSTRUCTION_LINK -->
+      </nav>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero heroSafety">
+    <div class="wrap">
+      <h1 class="hero__title">
+        <span>⚠️ Instructions & Safety</span>
+      </h1>
+      <div class="hero__meta">
+        <span class="metaText">
+          Battery: <strong data-bind="battery.model">ACME-TRIM-01</strong>
+          · Public ID: <strong data-bind="page.code">b/abc123</strong>
+        </span>
+      </div>
+    </div>
+  </section>
+
+  <main id="main" class="wrap content">
+    
+    <!-- CRITICAL WARNINGS (top, visible immediately) -->
+    <section class="section">
+      <div class="card alertCard dangerCard">
+        <h2 class="card__title">🚨 Critical Safety Warnings</h2>
+        <div class="alertBody">
+          <h3>Prohibitions & Risks</h3>
+          <ul class="warningList">
+            <li data-lang-content 
+                data-pl="❌ NIE podgrzewaj, NIE wrzucaj do ognia" 
+                data-en="❌ DO NOT heat, DO NOT throw into fire">
+              ❌ NIE podgrzewaj, NIE wrzucaj do ognia
+            </li>
+            <li data-lang-content 
+                data-pl="❌ NIE zwieraj styków (ryzyko pożaru/wybuchu)" 
+                data-en="❌ DO NOT short-circuit terminals (fire/explosion risk)">
+              ❌ NIE zwieraj styków (ryzyko pożaru/wybuchu)
+            </li>
+            <li data-lang-content 
+                data-pl="❌ NIE przebijaj, NIE zgniataj, NIE otwieraj" 
+                data-en="❌ DO NOT puncture, crush, or open">
+              ❌ NIE przebijaj, NIE zgniataj, NIE otwieraj
+            </li>
+            <li data-lang-content 
+                data-pl="❌ NIE zanurzaj w wodzie" 
+                data-en="❌ DO NOT immerse in water">
+              ❌ NIE zanurzaj w wodzie
+            </li>
+            <li data-lang-content 
+                data-pl="❌ UNIKAJ upuszczania i uderzeń mechanicznych" 
+                data-en="❌ AVOID dropping and mechanical shocks">
+              ❌ UNIKAJ upuszczania i uderzeń mechanicznych
+            </li>
+          </ul>
+
+          <h3>Emergency Procedures</h3>
+          <div class="emergencyGrid">
+            <div class="emergencyBox">
+              <h4>🔥 Smoke / Fire</h4>
+              <p data-lang-content 
+                 data-pl="1. Ewakuuj pomieszczenie<br>2. Zadzwoń 112/998<br>3. Gaś środkiem ABC/CO₂" 
+                 data-en="1. Evacuate room<br>2. Call emergency<br>3. Extinguish with ABC/CO₂">
+                1. Ewakuuj pomieszczenie<br>
+                2. Zadzwoń 112/998<br>
+                3. Gaś środkiem ABC/CO₂
+              </p>
+            </div>
+            <div class="emergencyBox">
+              <h4>💧 Leak / Damage</h4>
+              <p data-lang-content 
+                 data-pl="1. Nie dotykaj gołymi rękami<br>2. Wietrz pomieszczenie<br>3. Umieść w szczelnym pojemniku<br>4. Oddaj do utylizacji" 
+                 data-en="1. Do not touch bare-handed<br>2. Ventilate room<br>3. Place in sealed container<br>4. Dispose properly">
+                1. Nie dotykaj gołymi rękami<br>
+                2. Wietrz pomieszczenie<br>
+                3. Umieść w szczelnym pojemniku<br>
+                4. Oddaj do utylizacji
+              </p>
+            </div>
+            <div class="emergencyBox">
+              <h4>💨 Swelling / Bulging</h4>
+              <p data-lang-content 
+                 data-pl="1. NATYCHMIAST przestań używać<br>2. Odłącz od urządzenia<br>3. Nie ładuj<br>4. Oddaj do utylizacji" 
+                 data-en="1. STOP using immediately<br>2. Disconnect from device<br>3. Do not charge<br>4. Dispose properly">
+                1. NATYCHMIAST przestań używać<br>
+                2. Odłącz od urządzenia<br>
+                3. Nie ładuj<br>
+                4. Oddaj do utylizacji
+              </p>
+            </div>
+          </div>
+
+          <div class="infoBox">
+            <p><strong>Extinguishing agent:</strong> <span data-lang-content data-pl="<!-- EXTINGUISHING_PL -->" data-en="<!-- EXTINGUISHING_EN -->"><!-- EXTINGUISHING_PL --></span></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- USAGE INSTRUCTIONS -->
+    <section class="section">
+      <h2 class="section__title">Usage Instructions</h2>
+      
+      <div class="grid2">
+        <div class="card">
+          <h3 class="card__title">✅ Correct Usage</h3>
+          <ul class="checkList">
+            <!-- USAGE_CORRECT -->
+            <li data-lang-content 
+                data-pl="Używaj zgodnie z przeznaczeniem" 
+                data-en="Use as intended">
+              Używaj zgodnie z przeznaczeniem
+            </li>
+            <li data-lang-content 
+                data-pl="Sprawdzaj regularnie stan baterii" 
+                data-en="Check battery condition regularly">
+              Sprawdzaj regularnie stan baterii
+            </li>
+            <li data-lang-content 
+                data-pl="Przestrzegaj parametrów ładowania" 
+                data-en="Follow charging parameters">
+              Przestrzegaj parametrów ładowania
+            </li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h3 class="card__title">❌ Avoid</h3>
+          <ul class="xList">
+            <!-- USAGE_AVOID -->
+            <li data-lang-content 
+                data-pl="Przeładowanie (overcharge)" 
+                data-en="Overcharging">
+              Przeładowanie (overcharge)
+            </li>
+            <li data-lang-content 
+                data-pl="Głębokie rozładowanie" 
+                data-en="Deep discharge">
+              Głębokie rozładowanie
+            </li>
+            <li data-lang-content 
+                data-pl="Temperatura poza zakresem" 
+                data-en="Temperature outside range">
+              Temperatura poza zakresem
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- CHARGING INSTRUCTIONS -->
+    <section class="section">
+      <h2 class="section__title">Charging Instructions</h2>
+      
+      <div class="card">
+        <h3 class="card__title">Charging Rules</h3>
+        <div class="infoRow">
+          <span class="infoLabel">Allowed chargers</span>
+          <span class="infoValue" data-bind="battery.chargerType">Original manufacturer charger</span>
+        </div>
+        <div class="infoRow">
+          <span class="infoLabel">Charging voltage</span>
+          <span class="infoValue" data-bind="battery.chargeVoltage">—</span>
+        </div>
+        <div class="infoRow">
+          <span class="infoLabel">Charging current</span>
+          <span class="infoValue" data-bind="battery.chargeCurrent">—</span>
+        </div>
+        <div class="infoRow">
+          <span class="infoLabel">Charging temperature</span>
+          <span class="infoValue" data-bind="battery.tempCharging">0°C to +45°C</span>
+        </div>
+        
+        <div class="dividerSmall"></div>
+        
+        <div class="infoBox">
+          <p data-lang-content 
+             data-pl="⚠️ Nie ładuj w wysokich temperaturach. Nie zostawiaj bez nadzoru przez długi czas." 
+             data-en="⚠️ Do not charge at high temperatures. Do not leave unattended for long periods.">
+            ⚠️ Nie ładuj w wysokich temperaturach. Nie zostawiaj bez nadzoru przez długi czas.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- STORAGE & TRANSPORT -->
+    <section class="section">
+      <h2 class="section__title">Storage & Transport</h2>
+      
+      <div class="grid2">
+        <div class="card">
+          <h3 class="card__title">Storage Conditions</h3>
+          <div class="infoRow">
+            <span class="infoLabel">Temperature</span>
+            <span class="infoValue" data-bind="battery.tempStorage">-20°C to +35°C</span>
+          </div>
+          <div class="infoRow">
+            <span class="infoLabel">Humidity</span>
+            <span class="infoValue" data-bind="battery.humidityStorage">45-75% RH</span>
+          </div>
+          <div class="infoRow">
+            <span class="infoLabel">Charge level (long-term)</span>
+            <span class="infoValue" data-bind="battery.storageCharge">30-50%</span>
+          </div>
+          <p class="hint" data-lang-content 
+             data-pl="Przechowuj w suchym, chłodnym miejscu z dala od źródeł ciepła." 
+             data-en="Store in dry, cool place away from heat sources.">
+            Przechowuj w suchym, chłodnym miejscu z dala od źródeł ciepła.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3 class="card__title">Transport</h3>
+          <div class="infoRow">
+            <span class="infoLabel">UN class</span>
+            <span class="infoValue" data-bind="battery.unClass">—</span>
+          </div>
+          <div class="infoRow">
+            <span class="infoLabel">Transport restrictions</span>
+            <span class="infoValue" data-bind="battery.transportRestrictions">See SDS</span>
+          </div>
+          <p class="hint" data-lang-content 
+             data-pl="Przy transporcie lotniczym obowiązują ograniczenia. Zabezpiecz styki przed zwarciem." 
+             data-en="Air transport restrictions apply. Protect terminals from short-circuit.">
+            Przy transporcie lotniczym obowiązują ograniczenia. Zabezpiecz styki przed zwarciem.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- REPLACEMENT / DISASSEMBLY -->
+    <section class="section">
+      <h2 class="section__title">Replacement / Disassembly</h2>
+      
+      <div class="card alertCard">
+        <h3 class="card__title">User Replacement</h3>
+        <div class="alertBody">
+          <p><strong data-bind="battery.userReplaceable">NO</strong> - This battery is <strong>not user-replaceable</strong>.</p>
+          <p data-lang-content 
+             data-pl="⚠️ Wymiana tylko przez autoryzowany serwis. Samodzielna wymiana grozi utratą gwarancji i zagrożeniem bezpieczeństwa." 
+             data-en="⚠️ Replacement only by authorized service. Self-replacement voids warranty and poses safety risk.">
+            ⚠️ Wymiana tylko przez autoryzowany serwis. Samodzielna wymiana grozi utratą gwarancji i zagrożeniem bezpieczeństwa.
+          </p>
+          
+          <!-- REPLACEMENT_STEPS (if user-replaceable) -->
+          
+          <div class="dividerSmall"></div>
+          
+          <h4>Service Contact</h4>
+          <p>Email: <span data-bind="manufacturer.email">support@example.com</span></p>
+          <p>Website: <a data-bind-href="manufacturer.website" href="#">Service info</a></p>
+        </div>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- DISPOSAL INSTRUCTIONS -->
+    <section class="section" id="disposal">
+      <h2 class="section__title">♻️ Disposal & Recycling</h2>
+      
+      <div class="card alertCard">
+        <h3 class="card__title">How to Dispose</h3>
+        <div class="alertBody">
+          <ol class="disposalSteps">
+            <li data-lang-content 
+                data-pl="<strong>Rozładuj baterię</strong> do bezpiecznego poziomu (jeśli możliwe)" 
+                data-en="<strong>Discharge battery</strong> to safe level (if possible)">
+              <strong>Rozładuj baterię</strong> do bezpiecznego poziomu (jeśli możliwe)
+            </li>
+            <li data-lang-content 
+                data-pl="<strong>Zabezpiecz styki</strong> taśmą izolacyjną (zapobiegaj zwarciu)" 
+                data-en="<strong>Protect terminals</strong> with insulating tape (prevent short-circuit)">
+              <strong>Zabezpiecz styki</strong> taśmą izolacyjną (zapobiegaj zwarciu)
+            </li>
+            <li data-lang-content 
+                data-pl="<strong>Oddaj do punktu zbiórki:</strong><br>• PSZOK (Punkt Selektywnej Zbiórki Odpadów Komunalnych)<br>• Sklepy elektroniczne (duże sieci)<br>• Producent / autoryzowany serwis" 
+                data-en="<strong>Return to collection point:</strong><br>• Recycling center<br>• Electronics stores<br>• Manufacturer / authorized service">
+              <strong>Oddaj do punktu zbiórki:</strong><br>
+              • PSZOK (Punkt Selektywnej Zbiórki Odpadów Komunalnych)<br>
+              • Sklepy elektroniczne (duże sieci)<br>
+              • Producent / autoryzowany serwis
+            </li>
+          </ol>
+          
+          <div class="dividerSmall"></div>
+          
+          <h4>Damaged / Swollen Battery</h4>
+          <p data-lang-content 
+             data-pl="Uszkodzoną lub spuchniętą baterię umieść w szczelnym, niepalnym pojemniku (np. worek antyelektrostatyczny, słoik). NIE ŁADUJ. Jak najszybciej oddaj do specjalistycznego punktu zbiórki." 
+             data-en="Place damaged or swollen battery in sealed, non-flammable container (anti-static bag, glass jar). DO NOT CHARGE. Dispose at specialized collection point as soon as possible.">
+            Uszkodzoną lub spuchniętą baterię umieść w szczelnym, niepalnym pojemniku (np. worek antyelektrostatyczny, słoik). NIE ŁADUJ. Jak najszybciej oddaj do specjalistycznego punktu zbiórki.
+          </p>
+        </div>
+      </div>
+
+      <div class="dividerSmall"></div>
+
+      <!-- Waste info accordions -->
+      <div class="card">
+        <h3 class="card__title">Additional Information</h3>
+
+        <details class="acc">
+          <summary>(a) Waste prevention</summary>
+          <div class="acc__body" data-lang-content data-pl="<!-- WASTE_A_PREVENTION_PL -->" data-en="<!-- WASTE_A_PREVENTION_EN -->"><!-- WASTE_A_PREVENTION_PL --></div>
+        </details>
+
+        <details class="acc">
+          <summary>(b) Separate collection</summary>
+          <div class="acc__body" data-lang-content data-pl="<!-- WASTE_B_COLLECTIONROLE_PL -->" data-en="<!-- WASTE_B_COLLECTIONROLE_EN -->"><!-- WASTE_B_COLLECTIONROLE_PL --></div>
+        </details>
+
+        <details class="acc">
+          <summary>(c) Where to return</summary>
+          <div class="acc__body" data-lang-content data-pl="<!-- WASTE_C_WHERETORETURN_PL -->" data-en="<!-- WASTE_C_WHERETORETURN_EN -->"><!-- WASTE_C_WHERETORETURN_PL --></div>
+        </details>
+
+        <details class="acc">
+          <summary>(d) Safety</summary>
+          <div class="acc__body" data-lang-content data-pl="<!-- WASTE_D_SAFETY_PL -->" data-en="<!-- WASTE_D_SAFETY_EN -->"><!-- WASTE_D_SAFETY_PL --></div>
+        </details>
+
+        <details class="acc">
+          <summary>(e) Meaning of labels</summary>
+          <div class="acc__body" data-lang-content data-pl="<!-- WASTE_E_LABELSMEANING_PL -->" data-en="<!-- WASTE_E_LABELSMEANING_EN -->"><!-- WASTE_E_LABELSMEANING_PL --></div>
+        </details>
+
+        <details class="acc">
+          <summary>(f) Health & environment</summary>
+          <div class="acc__body" data-lang-content data-pl="<!-- WASTE_F_HEALTHENVIRONMENT_PL -->" data-en="<!-- WASTE_F_HEALTHENVIRONMENT_EN -->"><!-- WASTE_F_HEALTHENVIRONMENT_PL --></div>
+        </details>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- FAQ -->
+    <section class="section">
+      <h2 class="section__title">FAQ - Frequently Asked Questions</h2>
+      
+      <div class="card">
+        <details class="acc">
+          <summary>Battery is heating up - what to do?</summary>
+          <div class="acc__body" data-lang-content 
+               data-pl="Lekkie ogrzewanie podczas ładowania/rozładowania jest normalne. Jeśli bateria jest gorąca (>60°C) lub nietypowo ciepła w spoczynku: odłącz natychmiast, przestań używać, pozwól ostygnąć w bezpiecznym miejscu. Jeśli problem się powtarza - skontaktuj się z serwisem." 
+               data-en="Slight warming during charge/discharge is normal. If battery is hot (>60°C) or unusually warm at rest: disconnect immediately, stop using, let cool in safe place. If problem repeats - contact service.">
+            Lekkie ogrzewanie podczas ładowania/rozładowania jest normalne. Jeśli bateria jest gorąca (>60°C) lub nietypowo ciepła w spoczynku: odłącz natychmiast, przestań używać, pozwól ostygnąć w bezpiecznym miejscu. Jeśli problem się powtarza - skontaktuj się z serwisem.
+          </div>
+        </details>
+
+        <details class="acc">
+          <summary>Not charging - what to check?</summary>
+          <div class="acc__body" data-lang-content 
+               data-pl="1. Sprawdź ładowarkę i przewód<br>2. Sprawdź czy bateria nie jest zbyt zimna/gorąca<br>3. Sprawdź styki (brud, korozja)<br>4. Spróbuj innej gniazdka<br>5. Jeśli dalej nie działa - kontakt z serwisem" 
+               data-en="1. Check charger and cable<br>2. Check if battery is not too cold/hot<br>3. Check contacts (dirt, corrosion)<br>4. Try different outlet<br>5. If still not working - contact service">
+            1. Sprawdź ładowarkę i przewód<br>
+            2. Sprawdź czy bateria nie jest zbyt zimna/gorąca<br>
+            3. Sprawdź styki (brud, korozja)<br>
+            4. Spróbuj innej gniazdka<br>
+            5. Jeśli dalej nie działa - kontakt z serwisem
+          </div>
+        </details>
+
+        <details class="acc">
+          <summary>Battery is swollen - what to do?</summary>
+          <div class="acc__body" data-lang-content 
+               data-pl="<strong>NATYCHMIAST przestań używać!</strong><br>1. Odłącz od urządzenia i ładowarki<br>2. NIE ŁADUJ<br>3. Umieść w bezpiecznym, negęsto zabudowanym miejscu<br>4. Zabezpiecz styki<br>5. Jak najszybciej oddaj do utylizacji (PSZOK, sklep, serwis)<br>6. NIE wyrzucaj do śmieci!" 
+               data-en="<strong>STOP using immediately!</strong><br>1. Disconnect from device and charger<br>2. DO NOT CHARGE<br>3. Place in safe, non-congested area<br>4. Protect terminals<br>5. Dispose as soon as possible (recycling center, store, service)<br>6. DO NOT throw in trash!">
+            <strong>NATYCHMIAST przestań używać!</strong><br>
+            1. Odłącz od urządzenia i ładowarki<br>
+            2. NIE ŁADUJ<br>
+            3. Umieść w bezpiecznym, niegęsto zabudowanym miejscu<br>
+            4. Zabezpiecz styki<br>
+            5. Jak najszybciej oddaj do utylizacji (PSZOK, sklep, serwis)<br>
+            6. NIE wyrzucaj do śmieci!
+          </div>
+        </details>
+
+        <details class="acc">
+          <summary>How long will the battery last?</summary>
+          <div class="acc__body" data-bind="battery.lifespan">
+            Typical lifespan: 500-1000 charge cycles or 2-5 years depending on usage conditions. Avoid deep discharges and extreme temperatures to maximize lifespan.
+          </div>
+        </details>
+
+        <details class="acc">
+          <summary>Can I use a different charger?</summary>
+          <div class="acc__body" data-lang-content 
+               data-pl="Używaj tylko ładowarek zgodnych z parametrami baterii (napięcie, prąd). Nieoryginalna ładowarka może uszkodzić baterię lub spowodować pożar. W razie wątpliwości - kontakt z producentem." 
+               data-en="Use only chargers compatible with battery parameters (voltage, current). Non-original charger may damage battery or cause fire. If in doubt - contact manufacturer.">
+            Używaj tylko ładowarek zgodnych z parametrami baterii (napięcie, prąd). Nieoryginalna ładowarka może uszkodzić baterię lub spowodować pożar. W razie wątpliwości - kontakt z producentem.
+          </div>
+        </details>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- DOCUMENTS & VERSIONING -->
+    <section class="section">
+      <h2 class="section__title">Documents & Versioning</h2>
+      
+      <div class="card">
+        <h3 class="card__title">Current Instructions</h3>
+        <ul class="docs">
+          <!-- DOCUMENTS -->
+        </ul>
+        
+        <div class="dividerSmall"></div>
+        
+        <p class="hint">
+          Document version: <strong data-bind="page.version">1</strong> · 
+          Published: <strong data-bind="page.publishedAt">2026-01-10</strong>
+        </p>
+        
+        <!-- PREVIOUS_VERSIONS -->
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <div class="footerGrid">
+        <div>
+          <h4>About this page</h4>
+          <p class="muted small">Public battery information page. Permanently available.</p>
+          <p class="muted small">Last updated: <span data-bind="page.publishedAt">2026-01-10</span></p>
+        </div>
+        <div>
+          <h4>Links</h4>
+          <ul class="footerLinks">
+            <li><a href="./index.html">← Battery Info</a></li>
+            <li><a href="#" data-bind-href="page.privacyUrl">Privacy Policy</a></li>
+            <li><a href="#" data-bind-href="manufacturer.website">Support</a></li>
+          </ul>
+        </div>
+      </div>
+    </footer>
+
+  </main>
+
+  <!-- Data embedded directly in HTML by build -->
+  <script src="./assets/app.js" defer></script>
+</body>
+</html>

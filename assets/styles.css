@@ -282,10 +282,166 @@ a:hover{ text-decoration:underline; }
   border-top: 1px solid var(--line);
 }
 
+/* Emergency grid for critical warnings */
+.emergencyGrid{
+  display:grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  margin: 16px 0;
+}
+.emergencyBox{
+  border: 2px solid #dc2626;
+  background: #fef2f2;
+  border-radius: var(--radius);
+  padding: 14px;
+}
+.emergencyBox__title{
+  font-weight: 900;
+  font-size: 14px;
+  color: #991b1b;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.emergencyBox__list{
+  margin: 0;
+  padding-left: 18px;
+  color: #7f1d1d;
+}
+
+/* Check/X lists for instructions */
+.checkList{
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.checkList li{
+  padding-left: 24px;
+  margin: 8px 0;
+  position: relative;
+}
+.checkList li:before{
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: #16a34a;
+  font-weight: 900;
+}
+
+.xList{
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.xList li{
+  padding-left: 24px;
+  margin: 8px 0;
+  position: relative;
+}
+.xList li:before{
+  content: "✗";
+  position: absolute;
+  left: 0;
+  color: #dc2626;
+  font-weight: 900;
+}
+
+/* Disposal steps */
+.disposalSteps{
+  counter-reset: step-counter;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.disposalSteps li{
+  counter-increment: step-counter;
+  padding-left: 36px;
+  margin: 14px 0;
+  position: relative;
+}
+.disposalSteps li:before{
+  content: counter(step-counter);
+  position: absolute;
+  left: 0;
+  top: 0;
+  background: #111;
+  color: #fff;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 900;
+}
+
+/* Danger cards for critical info */
+.dangerCard{
+  border: 2px solid #ea580c;
+  background: #fff7ed;
+  border-radius: var(--radius);
+  padding: 14px;
+  margin: 12px 0;
+}
+.dangerCard__title{
+  font-weight: 900;
+  font-size: 13px;
+  color: #9a3412;
+  margin-bottom: 6px;
+}
+.dangerCard__text{
+  color: #7c2d12;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+/* Footer grid for multiple columns */
+.footerGrid{
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+.footerSection{
+  font-size: 12px;
+}
+.footerSection__title{
+  font-weight: 900;
+  font-size: 11px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+.footerSection__text{
+  color: var(--text);
+  line-height: 1.5;
+}
+
+/* Copy button */
+.copyBtn{
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid #111;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-weight: 900;
+  font-size: 11px;
+  background:#fff;
+  cursor: pointer;
+}
+.copyBtn:hover{
+  background:#f3f4f6;
+}
+
 @media (min-width: 900px){
   .grid3{ grid-template-columns: 1fr 1fr 1fr; }
   .grid2{ grid-template-columns: 1fr 1fr; }
   .twoCols{ grid-template-columns: 1fr 1fr; }
+  .emergencyGrid{ grid-template-columns: 1fr 1fr; }
+  .footerGrid{ grid-template-columns: 1fr 1fr 1fr; }
 }
 @media print{
   .topbar, .tabsBar{ display:none !important; }

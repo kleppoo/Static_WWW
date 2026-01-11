@@ -1,0 +1,319 @@
+<!doctype html>
+<!--
+  ====================================================================
+  BATTERY INFO - PUBLIC LANDING PAGE (QR SCAN)
+  ====================================================================
+  
+  Self-contained, works offline, designed for 10+ year stability.
+  Minimal JavaScript (only UI interactions).
+  All data hardcoded in HTML by build process.
+  ====================================================================
+-->
+<html lang="pl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Battery Info</title>
+  <meta name="description" content="Public battery information page - permanent QR link" />
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="stylesheet" href="./assets/styles.css" />
+</head>
+
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <!-- HEADER -->
+  <header class="topbar">
+    <div class="wrap topbar__inner">
+      <div class="brand">
+        <img class="brand__logo" src="./assets/logo.svg" alt="Logo" />
+        <div class="brand__text">
+          <div class="brand__name" data-bind="tenant.name">Battery QR</div>
+          <div class="brand__sub">Public Battery Info</div>
+        </div>
+      </div>
+
+      <nav class="topbar__nav" aria-label="Navigation">
+        <button class="chip chip--active" type="button" data-action="lang" data-lang="pl" aria-pressed="true">PL</button>
+        <button class="chip" type="button" data-action="lang" data-lang="en" aria-pressed="false">EN</button>
+        <a class="chip chip--primary" href="./instructions-safety.html">Instructions & Safety</a>
+        <!-- PDF_INSTRUCTION_LINK -->
+      </nav>
+    </div>
+  </header>
+
+  <!-- HERO: Battery Identification -->
+  <section class="hero">
+    <div class="wrap">
+      <div class="crumbs" aria-label="Breadcrumb">
+        <span class="crumbs__dim">Battery</span>
+        <span class="crumbs__sep">/</span>
+        <span class="crumbs__link" data-bind="page.code">b/abc123</span>
+      </div>
+
+      <h1 class="hero__title">
+        <span data-bind="battery.model">ACME-TRIM-01</span>
+        <span class="hero__titleSep">|</span>
+        <span data-bind="battery.brand">Brand</span>
+      </h1>
+
+      <div class="hero__meta">
+        <span class="pill" data-bind="battery.status">NEW</span>
+        <span class="metaText">
+          Public ID: <strong data-bind="page.code">b/abc123</strong>
+          <button class="btnCopy" data-action="copy-id" title="Copy ID">📋</button>
+        </span>
+      </div>
+    </div>
+  </section>
+
+  <main id="main" class="wrap content">
+    
+    <!-- SECTION: Identification -->
+    <section class="section">
+      <h2 class="section__title">Battery Identification</h2>
+      
+      <div class="grid2">
+        <!-- Photo -->
+        <div class="card">
+          <h3 class="card__title">Product</h3>
+          <!-- PRODUCT_IMAGE -->
+          <div class="productInfo">
+            <div class="infoRow">
+              <span class="infoLabel">Model / Trade name</span>
+              <span class="infoValue" data-bind="battery.model">—</span>
+            </div>
+            <div class="infoRow">
+              <span class="infoLabel">Brand</span>
+              <span class="infoValue" data-bind="battery.brand">—</span>
+            </div>
+            <div class="infoRow">
+              <span class="infoLabel">Status</span>
+              <span class="infoValue" data-bind="battery.status">—</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- IDs -->
+        <div class="card">
+          <h3 class="card__title">Identifiers</h3>
+          <div class="infoRow">
+            <span class="infoLabel">Public ID (QR)</span>
+            <span class="infoValue"><strong data-bind="page.code">—</strong></span>
+          </div>
+          <div class="infoRow">
+            <span class="infoLabel">Permalink</span>
+            <span class="infoValue"><a data-bind-href="page.permalink" href="#">link</a></span>
+          </div>
+          <div class="infoRow">
+            <span class="infoLabel">Batch / Serial</span>
+            <span class="infoValue" data-bind="battery.batchSerial">—</span>
+          </div>
+          <div class="infoRow">
+            <span class="infoLabel">Production date</span>
+            <span class="infoValue" data-bind="battery.manufactureDate">—</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- SECTION: Technical Parameters -->
+    <section class="section">
+      <h2 class="section__title">Technical Parameters</h2>
+      
+      <div class="grid3">
+        <div class="card">
+          <h3 class="card__title">Chemistry & Capacity</h3>
+          <div class="infoRow">
+            <span class="infoLabel">Chemistry</span>
+            <span class="infoValue" data-bind="battery.chemistry">—</span>
+          </div>
+          <div class="infoRow">
+            <span class="infoLabel">Nominal voltage</span>
+            <span class="infoValue" data-bind="battery.voltageNominal">—</span>
+          </div>
+          <div class="infoRow">
+            <span class="infoLabel">Capacity</span>
+            <span class="infoValue" data-bind="battery.capacity">—</span>
+          </div>
+          <div class="infoRow">
+            <span class="infoLabel">Energy</span>
+            <span class="infoValue" data-bind="battery.energy">—</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3 class="card__title">Physical</h3>
+          <div class="infoRow">
+            <span class="infoLabel">Mass</span>
+            <span class="infoValue" data-bind="battery.mass">—</span>
+          </div>
+          <div class="infoRow">
+            <span class="infoLabel">Dimensions</span>
+            <span class="infoValue" data-bind="battery.dimensions">—</span>
+          </div>
+          <div class="infoRow">
+            <span class="infoLabel">IP rating</span>
+            <span class="infoValue" data-bind="battery.ipRating">—</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3 class="card__title">Operating Conditions</h3>
+          <div class="infoRow">
+            <span class="infoLabel">Operating temp.</span>
+            <span class="infoValue" data-bind="battery.tempOperating">—</span>
+          </div>
+          <div class="infoRow">
+            <span class="infoLabel">Charging temp.</span>
+            <span class="infoValue" data-bind="battery.tempCharging">—</span>
+          </div>
+          <div class="infoRow">
+            <span class="infoLabel">Max. current</span>
+            <span class="infoValue" data-bind="battery.currentMax">—</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- SECTION: Compliance & Marking -->
+    <section class="section">
+      <h2 class="section__title">Compliance & Marking</h2>
+      
+      <div class="grid2">
+        <div class="card">
+          <h3 class="card__title">Pictograms & Warnings</h3>
+          <!-- PICTOGRAMS -->
+          <div class="warnings">
+            <div class="warningItem">⚠️ <span data-bind="battery.warningLabel">Keep away from fire</span></div>
+            <div class="warningItem">♻️ <span>Separate collection required</span></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3 class="card__title">Declarations</h3>
+          <div class="infoRow">
+            <span class="infoLabel">Transport class</span>
+            <span class="infoValue" data-bind="battery.unClass">—</span>
+          </div>
+          <div class="infoRow">
+            <span class="infoLabel">SDS / Safety sheet</span>
+            <span class="infoValue">
+              <a data-bind-href="battery.sdsUrl" href="#">Download PDF</a>
+            </span>
+          </div>
+          <div class="infoRow">
+            <span class="infoLabel">Compliance docs</span>
+            <span class="infoValue">
+              <a href="#docs">See documents</a>
+            </span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- SECTION: Recycling & Disposal -->
+    <section class="section">
+      <h2 class="section__title">Recycling & Disposal</h2>
+      
+      <div class="card alertCard">
+        <h3 class="card__title">⚠️ Important</h3>
+        <div class="alertBody">
+          <p><strong data-lang-content data-pl="Nie wyrzucaj do odpadów zmieszanych!" data-en="Do not dispose with mixed waste!">Nie wyrzucaj do odpadów zmieszanych!</strong></p>
+          <p data-lang-content 
+             data-pl="Zużyte baterie należy oddać do punktów zbiorczych (PSZOK, sklepy)." 
+             data-en="Return used batteries to collection points (recycling centers, stores).">
+            Zużyte baterie należy oddać do punktów zbiorczych (PSZOK, sklepy).
+          </p>
+        </div>
+        <a class="btn btnPrimary" href="./instructions-safety.html#disposal">Full disposal instructions →</a>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- SECTION: Public Documents -->
+    <section class="section" id="docs">
+      <h2 class="section__title">Public Documents</h2>
+      
+      <div class="card">
+        <h3 class="card__title">Instructions & Manuals</h3>
+        <ul class="docs">
+          <!-- DOCUMENTS -->
+        </ul>
+        
+        <div class="dividerSmall"></div>
+        
+        <h3 class="card__title">Document History</h3>
+        <div class="hint">
+          <p>All document versions are permanently available. Current version: <strong data-bind="page.version">1</strong></p>
+          <!-- DOCUMENT_VERSIONS -->
+        </div>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- SECTION: Support -->
+    <section class="section">
+      <h2 class="section__title">Support & Contact</h2>
+      
+      <div class="grid2">
+        <div class="card">
+          <h3 class="card__title">Manufacturer</h3>
+          <div class="text" data-bind="manufacturer.name">—</div>
+          <div class="text muted" data-bind="manufacturer.address">—</div>
+        </div>
+
+        <div class="card">
+          <h3 class="card__title">Support</h3>
+          <div class="infoRow">
+            <span class="infoLabel">Website</span>
+            <span class="infoValue">
+              <a data-bind-href="manufacturer.website" href="#">Visit</a>
+            </span>
+          </div>
+          <div class="infoRow">
+            <span class="infoLabel">Support email</span>
+            <span class="infoValue" data-bind="manufacturer.email">—</span>
+          </div>
+          <div class="infoRow">
+            <span class="infoLabel">Support hours</span>
+            <span class="infoValue" data-bind="manufacturer.supportHours">Mon-Fri 9-17 CET</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <div class="footerGrid">
+        <div>
+          <h4>About this page</h4>
+          <p class="muted small">Public battery information page. Permanently available. No personal data.</p>
+          <p class="muted small">Last updated: <span data-bind="page.publishedAt">2026-01-10</span></p>
+        </div>
+        <div>
+          <h4>Links</h4>
+          <ul class="footerLinks">
+            <li><a href="./instructions-safety.html">Instructions & Safety</a></li>
+            <li><a href="#" data-bind-href="page.privacyUrl">Privacy Policy</a></li>
+            <li><a href="#" data-bind-href="page.reportUrl">Report Issue</a></li>
+          </ul>
+        </div>
+      </div>
+    </footer>
+
+  </main>
+
+  <!-- Data embedded directly in HTML by build -->
+  <script src="./assets/app.js" defer></script>
+</body>
+</html>

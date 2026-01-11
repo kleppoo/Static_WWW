@@ -5,6 +5,8 @@ function setupTabs() {
   const tabs = Array.from(document.querySelectorAll(".tab"));
   const panels = Array.from(document.querySelectorAll(".panel"));
 
+  if (!tabs.length || !panels.length) return; // Not on tabbed page
+
   function activate(tabName) {
     tabs.forEach((t) => {
       const active = t.getAttribute("data-tab") === tabName;
@@ -28,6 +30,8 @@ function setupTabs() {
 
 function setupLangToggle() {
   const btns = Array.from(document.querySelectorAll('[data-action="lang"]'));
+  if (!btns.length) return;
+  
   let lang = "pl";
 
   function applyLang(next) {
@@ -41,7 +45,7 @@ function setupLangToggle() {
     // Switch content for elements with data-lang-content
     document.querySelectorAll("[data-lang-content]").forEach((el) => {
       const content = el.getAttribute(`data-${lang}`);
-      if (content) el.textContent = content;
+      if (content) el.innerHTML = content; // innerHTML for HTML content
     });
   }
 
@@ -49,7 +53,40 @@ function setupLangToggle() {
   applyLang("pl");
 }
 
+function setupCopyID() {
+  const btn = document.querySelector('[data-action="copy-id"]');
+  if (!btn) return;
+
+  btn.addEventListener("click", async () => {
+    const idElement = document.querySelector('[data-bind="page.code"]');
+    if (!idElement) return;
+    
+    const id = idElement.textContent.trim();
+    
+    try {
+      await navigator.clipboard.writeText(id);
+      btn.textContent = "✓";
+      setTimeout(() => {
+        btn.textContent = "📋";
+      }, 2000);
+    } catch (err) {
+      // Fallback for older browsers
+      const input = document.createElement("input");
+      input.value = id;
+      document.body.appendChild(input);
+      input.select();
+      document.execCommand("copy");
+      document.body.removeChild(input);
+      btn.textContent = "✓";
+      setTimeout(() => {
+        btn.textContent = "📋";
+      }, 2000);
+    }
+  });
+}
+
 (function main() {
   setupTabs();
   setupLangToggle();
+  setupCopyID();
 })();
