@@ -37,7 +37,6 @@
       <nav class="topbar__nav" aria-label="Navigation">
         <button class="chip chip--active" type="button" data-action="lang" data-lang="pl" aria-pressed="true">PL</button>
         <button class="chip" type="button" data-action="lang" data-lang="en" aria-pressed="false">EN</button>
-        <a class="chip chip--primary" href="./instructions-safety.html">Instructions & Safety</a>
         <!-- PDF_INSTRUCTION_LINK -->
       </nav>
     </div>
@@ -395,10 +394,16 @@
         
         <h3 class="card__title" data-lang-content data-pl="Historia dokumentu" data-en="Document History">Historia dokumentu</h3>
         <div class="hint">
-          <p data-lang-content 
-             data-pl="Wszystkie wersje dokumentów są dostępne na stałe. Aktualna wersja: <strong data-bind=\"page.version\">1</strong>" 
-             data-en="All document versions are permanently available. Current version: <strong data-bind=\"page.version\">1</strong>">
-            Wszystkie wersje dokumentów są dostępne na stałe. Aktualna wersja: <strong data-bind="page.version">1</strong>
+          <p>
+            <span data-lang-content 
+                  data-pl="Wszystkie wersje dokumentów są dostępne na stałe. Aktualna wersja strony:" 
+                  data-en="All document versions are permanently available. Current page version:">
+              Wszystkie wersje dokumentów są dostępne na stałe. Aktualna wersja strony:
+            </span>
+            <strong data-bind="page.version">1</strong>
+            <span class="muted"> • </span>
+            <span data-lang-content data-pl="Opublikowano:" data-en="Published:">Opublikowano:</span>
+            <strong data-bind="page.publishedAt">2026-01-10</strong>
           </p>
           <!-- DOCUMENT_VERSIONS -->
         </div>

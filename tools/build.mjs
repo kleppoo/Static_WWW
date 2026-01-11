@@ -88,6 +88,25 @@ function buildPage(tplName, outputName, data, css, js, logoDataUri) {
   ).join("\n    ");
   html = html.replace(/<!-- DOCUMENTS -->/g, docsHTML);
 
+  // 4b. Generate document history / versions list (for battery-info template)
+  const documents = get(data, "documents") || [];
+  const documentVersionsHTML = documents.length
+    ? `<ul class="miniList">\n${documents
+        .slice()
+        .sort((a, b) => {
+          const av = Number.parseFloat(String(a.version ?? "0")) || 0;
+          const bv = Number.parseFloat(String(b.version ?? "0")) || 0;
+          if (bv !== av) return bv - av;
+          return String(a.title ?? "").localeCompare(String(b.title ?? ""));
+        })
+        .map(
+          (d) =>
+            `  <li><a href="${escapeHtml(d.url)}" target="_blank" rel="noreferrer">${escapeHtml(d.title)}</a> — v${escapeHtml(d.version)} • ${escapeHtml(d.language)}</li>`
+        )
+        .join("\n")}\n</ul>`
+    : '<p class="muted">—</p>';
+  html = html.replace(/<!-- DOCUMENT_VERSIONS -->/g, documentVersionsHTML);
+
   // 5. Generate video HTML (if exists)
   const video = get(data, "video");
   const videoHTML = video && video.url 
