@@ -13,14 +13,16 @@ const logoPath = path.join(root, "assets", "logo.svg");
 const distDir = path.join(root, "dist");
 
 const templates = [
-  { 
-    tpl: "battery-info.template.html", 
-    out: "index.html" 
+  {
+    tpl: "index.template.html",
+    out: "index.html",
+    kind: "index",
   },
-  { 
-    tpl: "instructions-safety.template.html", 
-    out: "instructions-safety.html" 
-  }
+  {
+    tpl: "instructions-safety.template.html",
+    out: "instructions-safety.html",
+    kind: "instructions",
+  },
 ];
 
 function ensureDir(p) { fs.mkdirSync(p, { recursive: true }); }
@@ -53,9 +55,27 @@ function escapeHtml(str) {
     .replace(/'/g, "&#039;");
 }
 
-async function buildPage(tplName, outputName, data, css, js, logoDataUri, htmlMinifyFn) {
+function inferHasEnglish(data) {
+  const explicit = get(data, "page.hasEnglish");
+  if (typeof explicit === "boolean") return explicit;
+
+  const langs = get(data, "page.languages");
+  if (Array.isArray(langs)) return langs.includes("en");
+
+  // Heuristic fallback: if EN sections exist in input data, assume bilingual.
+  return Boolean(get(data, "wasteInfo.en") || get(data, "battery.extinguishingAgent.en"));
+}
+
+async function buildPage(tplName, outputName, data, css, js, logoDataUri, htmlMinifyFn, options = {}) {
   const tplPath = path.join(root, tplName);
   let html = fs.readFileSync(tplPath, "utf8");
+
+  const langSwitchHTML = options.hasEnglish
+    ? `<button class="chip chip--active" type="button" data-action="lang" data-lang="pl" aria-pressed="true">PL</button>
+        <button class="chip" type="button" data-action="lang" data-lang="en" aria-pressed="false">EN</button>`
+    : "";
+
+  html = html.replace(/<!-- LANG_SWITCH -->/g, langSwitchHTML);
   
   // 1. Replace all data-bind placeholders with actual values
   html = html.replace(/data-bind="([^"]+)">([^<]*)</g, (match, path, fallback) => {
@@ -69,8 +89,8 @@ async function buildPage(tplName, outputName, data, css, js, logoDataUri, htmlMi
     return value ? `href="${escapeHtml(value)}"` : 'href="#"';
   });
 
-  // 2b. Generate QR code SVG (battery-info page only)
-  if (tplName.includes("battery-info")) {
+  // 2b. Generate QR code SVG (index page only)
+  if (options.kind === "index") {
     const qrValue =
       get(data, "page.qrValue") ||
       get(data, "page.permalink") ||
@@ -97,8 +117,8 @@ async function buildPage(tplName, outputName, data, css, js, logoDataUri, htmlMi
     html = html.replace(/<!-- QR_SVG -->/g, qrSvg);
   }
 
-  // 3. Generate metrics HTML from data (only for battery-info page)
-  if (tplName.includes("battery-info")) {
+  // 3. Generate metrics HTML from data (only for index page)
+  if (options.kind === "index") {
     const metricsHTML = {
       left: (data["battery.left"] || []).map(m => 
         `<div class="metric"><div class="metric__label">${escapeHtml(m.label)}</div><div class="metric__value">${escapeHtml(m.value)}</div>${m.sub ? `<div class="metric__sub">${escapeHtml(m.sub)}</div>` : ''}</div>`
@@ -128,7 +148,7 @@ async function buildPage(tplName, outputName, data, css, js, logoDataUri, htmlMi
   ).join("\n    ");
   html = html.replace(/<!-- DOCUMENTS -->/g, docsHTML);
 
-  // 4b. Generate document history / versions list (for battery-info template)
+  // 4b. Generate document history / versions list (for index template)
   const documents = get(data, "documents") || [];
   const documentVersionsHTML = documents.length
     ? `<ul class="miniList">\n${documents
@@ -240,6 +260,7 @@ console.log(`🔨 Building static HTML pages...${shouldMinify ? " (minified)" : 
 // Read all source files once
 const dataJson = fs.readFileSync(dataPath, "utf8");
 const data = JSON.parse(dataJson);
+const hasEnglish = inferHasEnglish(data);
 const cssRaw = fs.readFileSync(cssPath, "utf8");
 const jsRaw = fs.readFileSync(jsPath, "utf8");
 const logo = fs.readFileSync(logoPath, "utf8");
@@ -277,10 +298,10 @@ if (shouldMinify) {
 
 // Build all pages
 const buildResults = [];
-for (const { tpl, out } of templates) {
+for (const { tpl, out, kind } of templates) {
   console.log(`📄 Building ${out}...`);
   // eslint-disable-next-line no-await-in-loop
-  const result = await buildPage(tpl, out, data, css, js, logoDataUri, htmlMinifyFn);
+  const result = await buildPage(tpl, out, data, css, js, logoDataUri, htmlMinifyFn, { kind, hasEnglish });
   buildResults.push(result);
 }
 

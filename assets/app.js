@@ -35,6 +35,29 @@ function setupTabs() {
   if (hash === "safety") activate("safety");
 }
 
+function applyDecimalSeparators(lang) {
+  const toPl = lang === "pl";
+
+  const targets = Array.from(
+    document.querySelectorAll(".metric__value, .metric__sub, .infoValue")
+  );
+
+  for (const el of targets) {
+    // Avoid touching URLs/links.
+    if (el.tagName === "A" || el.querySelector("a")) continue;
+
+    const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+    let node;
+    while ((node = walker.nextNode())) {
+      const t = node.nodeValue;
+      if (!t) continue;
+      node.nodeValue = toPl
+        ? t.replace(/(\d)\.(\d)/g, "$1,$2")
+        : t.replace(/(\d),(\d)/g, "$1.$2");
+    }
+  }
+}
+
 function setupLangToggle() {
   const btns = Array.from(document.querySelectorAll('[data-action="lang"]'));
   if (!btns.length) return;
@@ -61,6 +84,8 @@ function setupLangToggle() {
       if (!content) return;
       el.innerHTML = decodeHtmlEntities(content);
     });
+
+    applyDecimalSeparators(lang);
   }
 
   btns.forEach((b) => b.addEventListener("click", () => applyLang(b.getAttribute("data-lang"))));
@@ -102,5 +127,7 @@ function setupCopyID() {
 (function main() {
   setupTabs();
   setupLangToggle();
+  // If language toggle is not present, keep PL decimal separator.
+  applyDecimalSeparators("pl");
   setupCopyID();
 })();

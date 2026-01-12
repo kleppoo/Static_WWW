@@ -51,7 +51,7 @@ python -m http.server 5173
 ```
 
 Otwórz w przeglądarce:
-- http://localhost:5173/battery-info.template.html (podgląd strony głównej)
+- http://localhost:5173/index.template.html (podgląd strony głównej)
 - http://localhost:5173/instructions-safety.template.html (podgląd instrukcji)
 
 Edytuj dane w:

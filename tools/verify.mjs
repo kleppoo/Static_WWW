@@ -11,6 +11,7 @@ const root = process.cwd();
 const htmlPath = path.join(root, "dist", "index.html");
 const checksumPath = path.join(root, "dist", "index.html.sha256");
 const metadataPath = path.join(root, "dist", "build-metadata.json");
+const pageDataPath = path.join(root, "data", "page.json");
 
 function sha256(content) {
   return crypto.createHash("sha256").update(content, "utf8").digest("hex");
@@ -55,11 +56,39 @@ if (currentChecksum === expectedChecksum) {
 }
 
 // Additional checks
+let pageData = null;
+try {
+  pageData = JSON.parse(fs.readFileSync(pageDataPath, "utf8"));
+} catch {
+  // Optional: verify can still run in dist-only contexts.
+}
+
+const renderedDataCandidates = [
+  pageData?.tenant?.name,
+  pageData?.page?.code,
+  pageData?.page?.permalink,
+  pageData?.page?.qrValue,
+  pageData?.battery?.model,
+  pageData?.battery?.brand,
+  pageData?.battery?.variant,
+  pageData?.manufacturer?.name,
+  pageData?.euResponsibleEntity?.name,
+]
+  .filter((value) => typeof value === "string")
+  .map((value) => value.trim())
+  .filter((value) => value.length > 0);
+
+const somePageDataRendered =
+  renderedDataCandidates.length === 0
+    ? true
+    : renderedDataCandidates.some((value) => htmlContent.includes(value));
+
 const checks = [
   { name: "DOCTYPE declaration", test: /^<!doctype html>/i.test(htmlContent.trimStart()) },
   { name: "Inline CSS present", test: htmlContent.includes("<style>") },
   { name: "Inline JS present", test: htmlContent.includes("<script>") && htmlContent.includes("function setupTabs()") },
-  { name: "Data hardcoded in HTML", test: !htmlContent.includes('id="__PAGE_DATA__"') && htmlContent.includes("ACME-TRIM-01") },
+  { name: "No embedded __PAGE_DATA__ payload", test: !htmlContent.includes('id="__PAGE_DATA__"') },
+  { name: "Page data rendered into HTML", test: somePageDataRendered },
   { name: "SVG logo (data URI)", test: htmlContent.includes("data:image/svg+xml;base64") },
   { name: "No external CSS links", test: !htmlContent.match(/<link[^>]*href="[^"]*\.css"/) },
   { name: "No external JS scripts", test: !htmlContent.match(/<script[^>]*src="[^"]*\.js"/) },
