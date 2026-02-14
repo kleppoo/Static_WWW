@@ -458,6 +458,8 @@ const app = (() => {
 
       container.innerHTML = items.map((b) => {
         const code = b.code || b.data?.page?.code || "?";
+        const codeForUrl = String(code).startsWith("b/") ? String(code).slice(2) : String(code);
+        const codeForUrlEnc = encodeURIComponent(codeForUrl);
         const model = b.data?.battery?.model || "—";
         const brand = b.data?.battery?.brand || "";
         const status = b.publishedAt ? "published" : "draft";
@@ -471,7 +473,7 @@ const app = (() => {
               <p>Kod: <strong>${esc(code)}</strong></p>
               <p class="battery-links">
                 <a href="#" onclick="event.preventDefault(); app.previewBattery('${escAttr(code)}')" title="Podgląd strony z aktualnych danych (robocza)">Podgląd roboczy ↗</a>
-                ${b.publishedAt ? ` · <a href="https://${cfg.cloudfrontDomain}/b/${code}/index.html" target="_blank" title="Opublikowana strona">Opublikowana ↗</a>` : ""}
+                ${b.publishedAt ? ` · <a href="https://${cfg.cloudfrontDomain}/b/${codeForUrlEnc}/index.html" target="_blank" title="Opublikowana strona">Opublikowana ↗</a>` : ""}
               </p>
             </div>
             <div class="card-actions">

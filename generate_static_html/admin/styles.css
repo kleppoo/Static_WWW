@@ -13,6 +13,9 @@ a:hover { text-decoration: underline; }
 .screen { display: block; }
 .screen[hidden] { display: none !important; }
 
+/* Ensure the HTML 'hidden' attribute always hides elements */
+[hidden] { display: none !important; }
+
 /* ── Login ── */
 #login-screen {
   min-height: 100vh;
