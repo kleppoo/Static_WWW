@@ -75,10 +75,10 @@ export class BatteryStaticHostingStack extends cdk.Stack {
       enableAcceptEncodingBrotli: true,
     });
 
-    // Response headers policy: security + archival headers
-    const responseHeadersPolicy = new cloudfront.ResponseHeadersPolicy(this, "BatteryResponseHeaders", {
-      responseHeadersPolicyName: `BatteryHeaders-${this.stackName}`,
-      comment: "Security and archival headers for battery pages",
+    // Response headers policy: security + archival headers (published pages)
+    const publishedResponseHeadersPolicy = new cloudfront.ResponseHeadersPolicy(this, "PublishedResponseHeaders", {
+      responseHeadersPolicyName: `BatteryHeaders-Published-${this.stackName}`,
+      comment: "Security and archival headers for published battery pages",
       securityHeadersBehavior: {
         contentTypeOptions: { override: true }, // X-Content-Type-Options: nosniff
         frameOptions: {
@@ -106,6 +106,47 @@ export class BatteryStaticHostingStack extends cdk.Stack {
       },
     });
 
+    // Response headers policy: security + NO-CACHE (admin + preview)
+    const noCacheResponseHeadersPolicy = new cloudfront.ResponseHeadersPolicy(this, "NoCacheResponseHeaders", {
+      responseHeadersPolicyName: `BatteryHeaders-NoCache-${this.stackName}`,
+      comment: "Security headers + no-store for admin panel and preview pages",
+      securityHeadersBehavior: {
+        contentTypeOptions: { override: true },
+        frameOptions: {
+          frameOption: cloudfront.HeadersFrameOption.DENY,
+          override: true,
+        },
+        referrerPolicy: {
+          referrerPolicy: cloudfront.HeadersReferrerPolicy.STRICT_ORIGIN_WHEN_CROSS_ORIGIN,
+          override: true,
+        },
+        strictTransportSecurity: {
+          accessControlMaxAge: cdk.Duration.days(365),
+          includeSubdomains: true,
+          override: true,
+        },
+      },
+      customHeadersBehavior: {
+        customHeaders: [
+          {
+            header: "Cache-Control",
+            value: "no-store, no-cache, must-revalidate",
+            override: true,
+          },
+          {
+            header: "Pragma",
+            value: "no-cache",
+            override: true,
+          },
+          {
+            header: "Expires",
+            value: "0",
+            override: true,
+          },
+        ],
+      },
+    });
+
     // Opcjonalnie: custom domain + certyfikat
     let certificate: acm.ICertificate | undefined;
     let domainNames: string[] | undefined;
@@ -117,29 +158,33 @@ export class BatteryStaticHostingStack extends cdk.Stack {
       domainNames = [props.domainName];
     }
 
+    const s3Origin = origins.S3BucketOrigin.withOriginAccessControl(this.bucket);
+
     // CloudFront distribution
     this.distribution = new cloudfront.Distribution(this, "BatteryDistribution", {
       comment: "Battery Info Static Pages",
       defaultBehavior: {
-        origin: origins.S3BucketOrigin.withOriginAccessControl(this.bucket),
+        origin: s3Origin,
         viewerProtocolPolicy: cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
         cachePolicy,
-        responseHeadersPolicy,
+        responseHeadersPolicy: publishedResponseHeadersPolicy,
         allowedMethods: cloudfront.AllowedMethods.ALLOW_GET_HEAD,
         compress: true,
       },
       additionalBehaviors: {
         "_preview/*": {
-          origin: origins.S3BucketOrigin.withOriginAccessControl(this.bucket),
+          origin: s3Origin,
           viewerProtocolPolicy: cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
           cachePolicy: cloudfront.CachePolicy.CACHING_DISABLED,
+          responseHeadersPolicy: noCacheResponseHeadersPolicy,
           allowedMethods: cloudfront.AllowedMethods.ALLOW_GET_HEAD,
           compress: true,
         },
         "_admin/*": {
-          origin: origins.S3BucketOrigin.withOriginAccessControl(this.bucket),
+          origin: s3Origin,
           viewerProtocolPolicy: cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
           cachePolicy: cloudfront.CachePolicy.CACHING_DISABLED,
+          responseHeadersPolicy: noCacheResponseHeadersPolicy,
           allowedMethods: cloudfront.AllowedMethods.ALLOW_GET_HEAD,
           compress: true,
         },
