@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Battery Info — Panel administracyjny</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- ==================== LOGIN SCREEN ==================== -->
+  <div id="login-screen" class="screen">
+    <div class="login-card">
+      <h1>🔋 Battery Info</h1>
+      <p class="subtitle">Panel administracyjny</p>
+
+      <form id="login-form">
+        <div class="field">
+          <label for="login-email">E-mail</label>
+          <input type="email" id="login-email" required autocomplete="username">
+        </div>
+        <div class="field">
+          <label for="login-password">Hasło</label>
+          <input type="password" id="login-password" required autocomplete="current-password">
+        </div>
+        <button type="submit" class="btn btn-primary btn-full">Zaloguj się</button>
+        <p id="login-error" class="error" hidden></p>
+      </form>
+
+      <form id="new-password-form" hidden>
+        <p class="info">Musisz ustawić nowe hasło przy pierwszym logowaniu.</p>
+        <div class="field">
+          <label for="new-password">Nowe hasło</label>
+          <input type="password" id="new-password" required minlength="8" autocomplete="new-password">
+        </div>
+        <button type="submit" class="btn btn-primary btn-full">Ustaw hasło</button>
+        <p id="new-password-error" class="error" hidden></p>
+      </form>
+    </div>
+  </div>
+
+  <!-- ==================== MAIN APP ==================== -->
+  <div id="app-screen" class="screen" hidden>
+    <header>
+      <div class="header-left">
+        <h1>🔋 Battery Info</h1>
+        <span id="header-role" class="role-badge"></span>
+      </div>
+      <div class="header-right">
+        <span id="user-email"></span>
+        <button class="btn btn-sm" onclick="app.logout()">Wyloguj</button>
+      </div>
+    </header>
+
+    <!-- Navigation tabs (superadmin only) -->
+    <nav id="nav-tabs" hidden>
+      <button class="tab active" data-tab="tenants" onclick="app.switchTab('tenants')">Firmy</button>
+      <button class="tab" data-tab="batteries" onclick="app.switchTab('batteries')">Baterie</button>
+    </nav>
+
+    <main>
+      <!-- ========== TENANTS TAB (superadmin) ========== -->
+      <section id="tab-tenants" hidden>
+        <!-- Tenant list -->
+        <div id="tenant-list-view">
+          <div class="section-header">
+            <h2>Firmy (tenants)</h2>
+            <button class="btn btn-primary" onclick="app.showTenantEditor()">+ Nowa firma</button>
+          </div>
+          <div id="tenant-list" class="card-list">
+            <p class="loading">Ładowanie...</p>
+          </div>
+        </div>
+
+        <!-- Tenant editor -->
+        <div id="tenant-editor-view" hidden>
+          <div class="section-header">
+            <h2 id="tenant-editor-title">Nowa firma</h2>
+            <button class="btn" onclick="app.hideTenantEditor()">← Powrót</button>
+          </div>
+          <form id="tenant-form">
+            <fieldset>
+              <legend>Dane firmy</legend>
+              <div class="grid-2">
+                <div class="field">
+                  <label for="t-id">ID firmy (slug) *</label>
+                  <input type="text" id="t-id" required pattern="[a-z0-9_-]+" placeholder="np. acme-batteries">
+                  <small>Małe litery, cyfry, myślnik, podkreślnik</small>
+                </div>
+                <div class="field">
+                  <label for="t-name">Nazwa firmy *</label>
+                  <input type="text" id="t-name" required placeholder="np. ACME Batteries Sp. z o.o.">
+                </div>
+                <div class="field">
+                  <label for="t-email">E-mail kontaktowy (konto użytkownika) *</label>
+                  <input type="email" id="t-email" required placeholder="np. jan@firma.pl">
+                  <small>Zostanie automatycznie utworzone konto logowania</small>
+                </div>
+                <div class="field">
+                  <label for="t-notes">Notatki</label>
+                  <textarea id="t-notes" rows="2"></textarea>
+                </div>
+              </div>
+            </fieldset>
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary">Zapisz</button>
+              <button type="button" class="btn" onclick="app.hideTenantEditor()">Anuluj</button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Tenant detail (users) -->
+        <div id="tenant-detail-view" hidden>
+          <div class="section-header">
+            <h2 id="tenant-detail-title">Firma</h2>
+            <button class="btn" onclick="app.hideTenantDetail()">← Powrót</button>
+          </div>
+          <div id="tenant-detail-info"></div>
+
+          <div class="section-header" style="margin-top:1.5rem">
+            <h3>Użytkownicy firmy</h3>
+            <button class="btn btn-primary btn-sm" onclick="app.showUserForm()">+ Dodaj użytkownika</button>
+          </div>
+
+          <div id="user-form-container" hidden>
+            <form id="user-form" class="inline-form">
+              <div class="field"><input type="email" id="u-email" required placeholder="E-mail użytkownika"></div>
+              <div class="field"><input type="text" id="u-givenName" placeholder="Imię"></div>
+              <div class="field"><input type="text" id="u-familyName" placeholder="Nazwisko"></div>
+              <button type="submit" class="btn btn-primary btn-sm">Utwórz</button>
+              <button type="button" class="btn btn-sm" onclick="app.hideUserForm()">Anuluj</button>
+            </form>
+          </div>
+
+          <div id="tenant-users-list" class="card-list">
+            <p class="loading">Ładowanie...</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== BATTERIES TAB ========== -->
+      <section id="tab-batteries" hidden>
+        <!-- Battery list -->
+        <div id="battery-list-view">
+          <div class="section-header">
+            <h2 id="battery-list-title">Baterie</h2>
+            <!-- Tenant selector for superadmin -->
+            <div class="header-actions">
+              <select id="battery-tenant-select" hidden onchange="app.onTenantSelectChange()">
+                <option value="">— wybierz firmę —</option>
+              </select>
+              <button class="btn btn-primary" id="btn-new-battery" onclick="app.showBatteryEditor()">+ Nowa bateria</button>
+            </div>
+          </div>
+          <div id="battery-list" class="card-list">
+            <p class="loading">Ładowanie...</p>
+          </div>
+        </div>
+
+        <!-- Battery editor -->
+        <div id="battery-editor-view" hidden>
+          <div class="section-header">
+            <h2 id="editor-title">Nowa bateria</h2>
+            <button class="btn" onclick="app.hideBatteryEditor()">← Powrót</button>
+          </div>
+
+          <form id="battery-form">
+            <fieldset>
+              <legend>Identyfikacja</legend>
+              <div class="grid-2">
+                <div class="field">
+                  <label for="f-code">Kod baterii *</label>
+                  <input type="text" id="f-code" required placeholder="np. b/abc123">
+                </div>
+                <div class="field">
+                  <label for="f-permalink">Link permalink</label>
+                  <input type="url" id="f-permalink" placeholder="https://...">
+                </div>
+                <div class="field">
+                  <label for="f-qrValue">Wartość QR</label>
+                  <input type="text" id="f-qrValue" placeholder="URL lub tekst dla QR kodu">
+                </div>
+              </div>
+            </fieldset>
+
+            <fieldset>
+              <legend>Dane baterii</legend>
+              <div class="grid-2">
+                <div class="field"><label for="f-model">Model *</label><input type="text" id="f-model" required></div>
+                <div class="field"><label for="f-brand">Marka</label><input type="text" id="f-brand"></div>
+                <div class="field"><label for="f-chemistry">Chemia</label><input type="text" id="f-chemistry" placeholder="np. LFP, NMC"></div>
+                <div class="field"><label for="f-category">Kategoria</label><input type="text" id="f-category"></div>
+                <div class="field"><label for="f-capacity">Pojemność</label><input type="text" id="f-capacity" placeholder="np. 100 Ah"></div>
+                <div class="field"><label for="f-voltage">Napięcie</label><input type="text" id="f-voltage" placeholder="np. 48 V"></div>
+                <div class="field"><label for="f-weight">Waga</label><input type="text" id="f-weight" placeholder="np. 25 kg"></div>
+                <div class="field"><label for="f-dimensions">Wymiary</label><input type="text" id="f-dimensions" placeholder="np. 400×300×200 mm"></div>
+              </div>
+            </fieldset>
+
+            <fieldset>
+              <legend>Producent</legend>
+              <div class="grid-2">
+                <div class="field"><label for="f-mfr-name">Nazwa</label><input type="text" id="f-mfr-name"></div>
+                <div class="field"><label for="f-mfr-address">Adres</label><input type="text" id="f-mfr-address"></div>
+                <div class="field"><label for="f-mfr-email">E-mail</label><input type="email" id="f-mfr-email"></div>
+                <div class="field"><label for="f-mfr-web">Strona www</label><input type="url" id="f-mfr-web"></div>
+              </div>
+            </fieldset>
+
+            <fieldset>
+              <legend>Podmiot odpowiedzialny w UE</legend>
+              <div class="grid-2">
+                <div class="field"><label for="f-eu-name">Nazwa</label><input type="text" id="f-eu-name"></div>
+                <div class="field"><label for="f-eu-address">Adres</label><input type="text" id="f-eu-address"></div>
+                <div class="field"><label for="f-eu-email">E-mail</label><input type="email" id="f-eu-email"></div>
+                <div class="field"><label for="f-eu-web">Strona www</label><input type="url" id="f-eu-web"></div>
+              </div>
+            </fieldset>
+
+            <fieldset>
+              <legend>Metryki (3 kolumny na stronie)</legend>
+              <div class="grid-3">
+                <div><h4>Kolumna lewa</h4><div id="metrics-left"></div><button type="button" class="btn btn-sm" onclick="app.addMetric('left')">+ Metryka</button></div>
+                <div><h4>Kolumna środkowa</h4><div id="metrics-middle"></div><button type="button" class="btn btn-sm" onclick="app.addMetric('middle')">+ Metryka</button></div>
+                <div><h4>Kolumna prawa</h4><div id="metrics-right"></div><button type="button" class="btn btn-sm" onclick="app.addMetric('right')">+ Metryka</button></div>
+              </div>
+            </fieldset>
+
+            <fieldset>
+              <legend>Dokumenty</legend>
+              <div id="documents-list"></div>
+              <button type="button" class="btn btn-sm" onclick="app.addDocument()">+ Dokument</button>
+            </fieldset>
+
+            <fieldset>
+              <legend>Informacje dodatkowe (JSON)</legend>
+              <div class="field"><label for="f-wasteInfo">wasteInfo (JSON)</label><textarea id="f-wasteInfo" rows="5" placeholder='{"pl":{...},"en":{...}}'></textarea></div>
+              <div class="field"><label for="f-video">video (JSON)</label><textarea id="f-video" rows="3" placeholder='{"url":"...","title":"..."}'></textarea></div>
+              <div class="field"><label for="f-extinguishingAgent">Środek gaśniczy</label><input type="text" id="f-extinguishingAgent"></div>
+            </fieldset>
+
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary">Zapisz</button>
+              <button type="button" class="btn" onclick="app.hideBatteryEditor()">Anuluj</button>
+            </div>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <div id="toast-container"></div>
+  </div>
+
+  <script src="config.js"></script>
+  <script src="auth.js"></script>
+  <script src="api.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

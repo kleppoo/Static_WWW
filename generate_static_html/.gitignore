@@ -1,5 +1,10 @@
 # Build output
-dist/
+dist/*.html
+dist/*.sha256
+dist/build-metadata.json
+
+# Keep 404.html in git
+!dist/404.html
 
 # Node modules (if added in future)
 node_modules/
@@ -25,3 +30,10 @@ yarn-error.log*
 .env
 .env.local
 .env.*.local
+
+# CDK
+infra/dist/
+infra/node_modules/
+infra/cdk.out/
+*.js.map
+*.d.ts

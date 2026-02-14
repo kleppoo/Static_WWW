@@ -5,11 +5,18 @@
   "type": "module",
   "scripts": {
     "build": "node tools/build.mjs",
+    "build:minify": "node tools/build.mjs --minify",
     "verify": "node tools/verify.mjs",
+    "upload": "node tools/upload.mjs",
+    "upload:invalidate": "node tools/upload.mjs --invalidate",
+    "upload:dry": "node tools/upload.mjs --dry-run",
+    "publish": "npm run build && npm run upload:invalidate",
     "dev": "python -m http.server 5173",
     "dev:node": "npx serve ."
   },
   "devDependencies": {
+    "@aws-sdk/client-cloudfront": "^3.700.0",
+    "@aws-sdk/client-s3": "^3.700.0",
     "csso": "^5.0.5",
     "html-minifier-terser": "^7.2.0",
     "qrcode": "^1.5.4",

@@ -1,0 +1,285 @@
+/* ── Reset & base ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background: #f5f7fa;
+  color: #1a1a2e;
+  line-height: 1.5;
+}
+a { color: #2563eb; text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* ── Screen toggle ── */
+.screen { display: block; }
+.screen[hidden] { display: none !important; }
+
+/* ── Login ── */
+#login-screen {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+}
+.login-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 2.5rem;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 20px 60px rgba(0,0,0,.3);
+}
+.login-card h1 { font-size: 1.5rem; text-align: center; margin-bottom: .25rem; }
+.login-card .subtitle { text-align: center; color: #666; margin-bottom: 1.5rem; }
+.login-card .info { color: #2563eb; margin-bottom: 1rem; font-size: .9rem; }
+
+/* ── Form fields ── */
+.field { margin-bottom: 1rem; }
+.field label { display: block; font-weight: 600; font-size: .85rem; margin-bottom: .25rem; color: #444; }
+.field input, .field textarea, .field select {
+  width: 100%;
+  padding: .55rem .75rem;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: .95rem;
+  transition: border-color .15s;
+}
+.field input:focus, .field textarea:focus, .field select:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37,99,235,.12);
+}
+.field small { color: #888; font-size: .8rem; }
+.error { color: #dc2626; font-size: .85rem; margin-top: .5rem; }
+
+/* ── Buttons ── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: .35rem;
+  padding: .5rem 1rem;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  background: #fff;
+  color: #374151;
+  font-size: .9rem;
+  cursor: pointer;
+  transition: all .15s;
+}
+.btn:hover { background: #f3f4f6; }
+.btn-primary { background: #2563eb; color: #fff; border-color: #2563eb; }
+.btn-primary:hover { background: #1d4ed8; }
+.btn-danger { background: #dc2626; color: #fff; border-color: #dc2626; }
+.btn-danger:hover { background: #b91c1c; }
+.btn-success { background: #059669; color: #fff; border-color: #059669; }
+.btn-success:hover { background: #047857; }
+.btn-sm { padding: .3rem .6rem; font-size: .8rem; }
+.btn-full { width: 100%; justify-content: center; }
+.btn:disabled { opacity: .5; cursor: not-allowed; }
+
+/* ── Header ── */
+header {
+  background: #1a1a2e;
+  color: #fff;
+  padding: .75rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.header-left { display: flex; align-items: center; gap: .75rem; }
+.header-left h1 { font-size: 1.1rem; }
+.header-right { display: flex; align-items: center; gap: 1rem; }
+.header-right span { font-size: .85rem; opacity: .8; }
+.header-right .btn { color: #fff; border-color: rgba(255,255,255,.3); background: transparent; }
+.header-right .btn:hover { background: rgba(255,255,255,.1); }
+
+/* ── Role badge ── */
+.role-badge {
+  font-size: .7rem;
+  padding: .15rem .5rem;
+  border-radius: 9999px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+}
+.role-superadmin { background: #fbbf24; color: #1a1a2e; }
+.role-tenant { background: #60a5fa; color: #1a1a2e; }
+
+/* ── Navigation tabs ── */
+nav#nav-tabs {
+  background: #fff;
+  border-bottom: 1px solid #e5e7eb;
+  padding: 0 1.5rem;
+  display: flex;
+  gap: 0;
+}
+.tab {
+  padding: .75rem 1.25rem;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: .9rem;
+  color: #666;
+  border-bottom: 2px solid transparent;
+  transition: all .15s;
+}
+.tab:hover { color: #1a1a2e; }
+.tab.active { color: #2563eb; border-bottom-color: #2563eb; font-weight: 600; }
+
+/* ── Main layout ── */
+main { max-width: 1100px; margin: 1.5rem auto; padding: 0 1.5rem; }
+.section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; flex-wrap: wrap; gap: .5rem; }
+.section-header h2 { font-size: 1.3rem; }
+.section-header h3 { font-size: 1.1rem; }
+.header-actions { display: flex; gap: .5rem; align-items: center; }
+
+/* ── Card list ── */
+.card-list .loading { color: #888; }
+.card {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: .75rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: box-shadow .15s;
+  flex-wrap: wrap;
+  gap: .5rem;
+}
+.card:hover { box-shadow: 0 2px 8px rgba(0,0,0,.08); }
+.card-info h3 { font-size: 1rem; margin-bottom: .15rem; }
+.card-info p { font-size: .85rem; color: #666; }
+.card-actions { display: flex; gap: .5rem; align-items: center; flex-wrap: wrap; }
+
+/* ── Status badges ── */
+.status-badge {
+  font-size: .75rem;
+  padding: .15rem .5rem;
+  border-radius: 9999px;
+  font-weight: 600;
+}
+.status-published { background: #d1fae5; color: #065f46; }
+.status-draft { background: #fef3c7; color: #92400e; }
+.status-confirmed { background: #d1fae5; color: #065f46; }
+.status-force_change_password { background: #fef3c7; color: #92400e; }
+.status-force-change-password { background: #fef3c7; color: #92400e; }
+
+/* ── User detail grid ── */
+.user-card { flex-wrap: wrap; }
+.user-details-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: .35rem 1.5rem;
+  margin-top: .6rem;
+  padding-top: .6rem;
+  border-top: 1px solid #e5e7eb;
+  font-size: .85rem;
+}
+.user-detail-item {
+  display: flex;
+  gap: .4rem;
+  align-items: baseline;
+}
+.detail-label {
+  color: #6b7280;
+  font-weight: 500;
+  white-space: nowrap;
+}
+.detail-value {
+  color: #1f2937;
+}
+@media (max-width: 640px) {
+  .user-details-grid { grid-template-columns: 1fr; }
+}
+
+/* ── Fieldsets ── */
+fieldset {
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 1.25rem;
+  margin-bottom: 1.25rem;
+  background: #fff;
+}
+legend { font-weight: 700; font-size: .95rem; padding: 0 .5rem; color: #374151; }
+
+/* ── Grids ── */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0 1.25rem; }
+.grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0 1.25rem; }
+@media (max-width: 768px) { .grid-2, .grid-3 { grid-template-columns: 1fr; } }
+.grid-3 h4 { font-size: .9rem; margin-bottom: .5rem; color: #555; }
+
+/* ── Metric / Document rows ── */
+.metric-row, .document-row {
+  display: flex;
+  gap: .5rem;
+  align-items: flex-end;
+  margin-bottom: .5rem;
+}
+.metric-row .field, .document-row .field { flex: 1; margin-bottom: 0; }
+
+/* ── Inline form ── */
+.inline-form {
+  display: flex;
+  gap: .5rem;
+  align-items: flex-end;
+  padding: .75rem 0;
+  flex-wrap: wrap;
+}
+.inline-form .field { flex: 1; min-width: 150px; margin-bottom: 0; }
+
+/* ── Form actions ── */
+.form-actions { display: flex; gap: .75rem; margin-top: 1rem; }
+
+/* ── Select in header ── */
+#battery-tenant-select {
+  padding: .4rem .75rem;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: .9rem;
+}
+
+/* ── Toast ── */
+#toast-container {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+}
+.toast {
+  padding: .75rem 1.25rem;
+  border-radius: 8px;
+  color: #fff;
+  font-size: .9rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,.15);
+  animation: toast-in .3s ease;
+}
+.toast-success { background: #059669; }
+.toast-error { background: #dc2626; }
+.toast-info { background: #2563eb; }
+@keyframes toast-in { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+/* ── Empty state ── */
+.empty-state {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: #888;
+}
+.empty-state p { margin-top: .5rem; }
+
+/* ── Tenant detail info ── */
+.detail-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: .75rem;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+}
+.detail-item label { font-size: .75rem; color: #888; display: block; }
+.detail-item span { font-size: .95rem; font-weight: 500; }
