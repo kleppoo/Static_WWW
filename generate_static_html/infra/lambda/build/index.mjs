@@ -258,6 +258,8 @@ function apiResponse(statusCode, body) {
 export async function handler(event) {
   const rawCode = event.pathParameters?.code;
   const code = rawCode ? decodeURIComponent(rawCode) : null;
+  const resourcePath = event.resource || "";
+  const isPreview = resourcePath.endsWith("/preview");
 
   // Extract tenant from JWT (same logic as CRUD Lambda)
   const authHeader = event.headers?.Authorization || event.headers?.authorization || "";
@@ -282,7 +284,7 @@ export async function handler(event) {
     return apiResponse(400, { error: "Battery code required in URL" });
   }
 
-  console.log(`[Build] Publishing battery '${code}' for tenant '${tenantId}'`);
+  console.log(`[Build] ${isPreview ? "Previewing" : "Publishing"} battery '${code}' for tenant '${tenantId}'`);
 
   try {
     // 1. Get battery data from DynamoDB
@@ -310,7 +312,8 @@ export async function handler(event) {
       { template: templates.instructions, kind: "instructions", fileName: "instructions-safety.html" },
     ];
 
-    const s3Prefix = code.startsWith("b/") ? code : `b/${code}`;
+    const basePrefix = code.startsWith("b/") ? code : `b/${code}`;
+    const s3Prefix = isPreview ? `_preview/${basePrefix}` : basePrefix;
     const uploadedUrls = {};
     const buildResults = [];
 
@@ -330,7 +333,7 @@ export async function handler(event) {
           Key: s3Key,
           Body: html,
           ContentType: "text/html; charset=utf-8",
-          CacheControl: "public, max-age=31536000, immutable",
+          CacheControl: isPreview ? "no-cache, no-store, must-revalidate" : "public, max-age=31536000, immutable",
           Metadata: {
             "build-date": buildDate,
             "battery-code": code,
@@ -355,9 +358,9 @@ export async function handler(event) {
       console.log(`[Build] Uploaded ${s3Key} (${buildResults.at(-1).sizeKB} KB)`);
     }
 
-    // 5. Invalidate CloudFront cache
+    // 5. Invalidate CloudFront cache (only for publish, not preview)
     let invalidationId = null;
-    if (DISTRIBUTION_ID) {
+    if (!isPreview && DISTRIBUTION_ID) {
       const paths = buildResults.map((r) => `/${r.s3Key}`);
       const inv = await cf.send(
         new CreateInvalidationCommand({
@@ -370,6 +373,15 @@ export async function handler(event) {
       );
       invalidationId = inv.Invalidation?.Id;
       console.log(`[Build] CloudFront invalidation: ${invalidationId}`);
+    }
+
+    if (isPreview) {
+      // Preview mode — return preview URLs, skip DynamoDB update
+      return apiResponse(200, {
+        message: `Preview for '${code}' generated`,
+        urls: uploadedUrls,
+        pages: buildResults,
+      });
     }
 
     // 6. Update battery status in DynamoDB

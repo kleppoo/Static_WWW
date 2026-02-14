@@ -259,6 +259,38 @@ async function listTenants() {
   const tenants = (result.Items || []).map(({ PK, SK, ...rest }) => rest);
   tenants.sort((a, b) => (a.name || "").localeCompare(b.name || ""));
 
+  // Enrich with last login from contact user
+  for (const tenant of tenants) {
+    if (!tenant.contactEmail) continue;
+    try {
+      // Find user sub by email
+      const users = await cognito.send(
+        new ListUsersCommand({
+          UserPoolId: USER_POOL_ID,
+          Filter: `email = "${tenant.contactEmail}"`,
+          Limit: 1,
+        })
+      );
+      if (users.Users && users.Users.length > 0) {
+        const attrs = {};
+        for (const a of users.Users[0].Attributes || []) attrs[a.Name] = a.Value;
+        const sub = attrs.sub;
+        if (sub) {
+          const loginRecord = await ddb.send(
+            new GetCommand({
+              TableName: TABLE_NAME,
+              Key: { PK: `USER#${sub}`, SK: "LAST_LOGIN" },
+              ProjectionExpression: "lastLoginAt",
+            })
+          );
+          tenant.lastLoginAt = loginRecord.Item?.lastLoginAt || null;
+        }
+      }
+    } catch {
+      // Ignore — non-critical enrichment
+    }
+  }
+
   return response(200, { tenants, count: tenants.length });
 }
 

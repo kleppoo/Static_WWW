@@ -153,6 +153,15 @@ main { max-width: 1100px; margin: 1.5rem auto; padding: 0 1.5rem; }
 .card-info p { font-size: .85rem; color: #666; }
 .card-actions { display: flex; gap: .5rem; align-items: center; flex-wrap: wrap; }
 
+/* ── Tenant meta (dates in card) ── */
+.tenant-meta {
+  display: flex;
+  gap: 1.5rem;
+  font-size: .8rem;
+  color: #6b7280;
+  margin-top: .3rem;
+}
+
 /* ── Status badges ── */
 .status-badge {
   font-size: .75rem;

@@ -128,6 +128,22 @@ export class BatteryStaticHostingStack extends cdk.Stack {
         allowedMethods: cloudfront.AllowedMethods.ALLOW_GET_HEAD,
         compress: true,
       },
+      additionalBehaviors: {
+        "_preview/*": {
+          origin: origins.S3BucketOrigin.withOriginAccessControl(this.bucket),
+          viewerProtocolPolicy: cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
+          cachePolicy: cloudfront.CachePolicy.CACHING_DISABLED,
+          allowedMethods: cloudfront.AllowedMethods.ALLOW_GET_HEAD,
+          compress: true,
+        },
+        "_admin/*": {
+          origin: origins.S3BucketOrigin.withOriginAccessControl(this.bucket),
+          viewerProtocolPolicy: cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
+          cachePolicy: cloudfront.CachePolicy.CACHING_DISABLED,
+          allowedMethods: cloudfront.AllowedMethods.ALLOW_GET_HEAD,
+          compress: true,
+        },
+      },
       // Strona błędu 404 → czytelny komunikat
       errorResponses: [
         {
@@ -473,6 +489,10 @@ export class BatteryStaticHostingStack extends cdk.Stack {
     const publish = battery.addResource("publish");
     publish.addMethod("POST", buildIntegration, cognitoMethodOptions);
 
+    // /batteries/{code}/preview
+    const preview = battery.addResource("preview");
+    preview.addMethod("POST", buildIntegration, cognitoMethodOptions);
+
     // /tenants (superadmin only — enforced in Lambda)
     const tenants = api.root.addResource("tenants");
     tenants.addMethod("GET", tenantIntegration, cognitoMethodOptions);
@@ -506,6 +526,8 @@ export class BatteryStaticHostingStack extends cdk.Stack {
       destinationKeyPrefix: "_admin/",
       prune: false,
       memoryLimit: 256,
+      distribution: this.distribution,
+      distributionPaths: ["/_admin/*"],
     });
 
     // ────────────────────────────────────────────

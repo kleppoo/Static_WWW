@@ -81,6 +81,11 @@ const API = (() => {
     return request("POST", `/batteries/${encodeURIComponent(code)}/publish`, null, h);
   }
 
+  function previewBattery(code, tenantId) {
+    const h = tenantId ? { "X-Tenant-Id": tenantId } : {};
+    return request("POST", `/batteries/${encodeURIComponent(code)}/preview`, null, h);
+  }
+
   // ── Tenant management (superadmin only) ──
 
   function listTenants() {
@@ -122,7 +127,7 @@ const API = (() => {
 
   return {
     configure,
-    listBatteries, getBattery, createBattery, updateBattery, deleteBattery, publishBattery,
+    listBatteries, getBattery, createBattery, updateBattery, deleteBattery, publishBattery, previewBattery,
     listTenants, getTenant, createTenant, updateTenant, deleteTenant,
     listTenantUsers, createTenantUser, deleteTenantUser,
   };

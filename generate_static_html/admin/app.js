@@ -162,18 +162,27 @@ const app = (() => {
         return;
       }
 
-      container.innerHTML = tenantsCache.map((t) => `
+      container.innerHTML = tenantsCache.map((t) => {
+        const fmtDate = (d) => d ? new Date(d).toLocaleString("pl-PL", { year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit", second: "2-digit" }) : null;
+        const created = fmtDate(t.createdAt);
+        const lastLogin = fmtDate(t.lastLoginAt);
+        return `
         <div class="card">
           <div class="card-info">
             <h3>${esc(t.name)}</h3>
-            <p>ID: <strong>${esc(t.tenantId)}</strong> · ${esc(t.contactEmail || "—")}</p>
+            <p>ID: <strong>${esc(t.tenantId)}</strong> · ${esc(t.contactEmail || "\u2014")}</p>
+            <div class="tenant-meta">
+              <span>Utworzono: ${created || "\u2014"}</span>
+              <span>Ostatnie logowanie: ${lastLogin || '<span style="color:#9ca3af">Nigdy</span>'}</span>
+            </div>
           </div>
           <div class="card-actions">
-            <button class="btn btn-sm" onclick="app.showTenantDetail('${escAttr(t.tenantId)}')">Szczegóły</button>
+            <button class="btn btn-sm" onclick="app.showTenantDetail('${escAttr(t.tenantId)}')">Szczeg\u00f3\u0142y</button>
             <button class="btn btn-sm" onclick="app.editTenant('${escAttr(t.tenantId)}')">Edytuj</button>
-            <button class="btn btn-sm btn-danger" onclick="app.deleteTenant('${escAttr(t.tenantId)}')">Usuń</button>
+            <button class="btn btn-sm btn-danger" onclick="app.deleteTenant('${escAttr(t.tenantId)}')">Usu\u0144</button>
           </div>
-        </div>`).join("");
+        </div>`;
+      }).join("");
     } catch (err) {
       container.innerHTML = `<p class="error">Błąd: ${esc(err.message)}</p>`;
     }
@@ -459,8 +468,10 @@ const app = (() => {
           <div class="card">
             <div class="card-info">
               <h3>${esc(model)} ${brand ? "— " + esc(brand) : ""}</h3>
-              <p>Kod: <strong>${esc(code)}</strong>
-                ${b.publishedAt ? ` · <a href="https://${cfg.cloudfrontDomain}/${code}/index.html" target="_blank">Zobacz stronę ↗</a>` : ""}
+              <p>Kod: <strong>${esc(code)}</strong></p>
+              <p class="battery-links">
+                <a href="#" onclick="event.preventDefault(); app.previewBattery('${escAttr(code)}')" title="Podgląd strony z aktualnych danych (robocza)">Podgląd roboczy ↗</a>
+                ${b.publishedAt ? ` · <a href="https://${cfg.cloudfrontDomain}/b/${code}/index.html" target="_blank" title="Opublikowana strona">Opublikowana ↗</a>` : ""}
               </p>
             </div>
             <div class="card-actions">
@@ -659,6 +670,23 @@ const app = (() => {
     }
   }
 
+  async function previewBattery(code) {
+    const tenantId = getActiveTenantId();
+    try {
+      toast("Generowanie podglądu...", "info");
+      const result = await API.previewBattery(code, userRole === "superadmin" ? tenantId : null);
+      const previewUrl = result.urls?.index;
+      if (previewUrl) {
+        window.open(previewUrl, "_blank");
+        toast("Podgląd otwarty", "success");
+      } else {
+        toast("Nie udało się wygenerować podglądu", "error");
+      }
+    } catch (err) {
+      toast("Błąd podglądu: " + err.message, "error");
+    }
+  }
+
   async function deleteBattery(code) {
     if (!confirm(`Usunąć baterię "${code}"?`)) return;
     const tenantId = getActiveTenantId();
@@ -695,7 +723,7 @@ const app = (() => {
     showTenantEditor, hideTenantEditor, editTenant, deleteTenant,
     showTenantDetail, hideTenantDetail,
     showUserForm, hideUserForm, deleteUser,
-    showBatteryEditor, hideBatteryEditor, editBattery, deleteBattery, publishBattery,
+    showBatteryEditor, hideBatteryEditor, editBattery, deleteBattery, publishBattery, previewBattery,
     onTenantSelectChange,
     addMetric, addDocument,
     logout,
